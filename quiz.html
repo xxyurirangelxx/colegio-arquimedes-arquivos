@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Tempo de Chuva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .feedback-correct {
+            color: #16a34a; /* green-600 */
+            background-color: #dcfce7; /* green-100 */
+            border-left: 4px solid #16a34a;
+        }
+        .feedback-incorrect {
+            color: #dc2626; /* red-600 */
+            background-color: #fee2e2; /* red-100 */
+            border-left: 4px solid #dc2626;
+        }
+        /* Custom radio button style */
+        .custom-radio input[type="radio"] {
+            display: none;
+        }
+        .custom-radio label {
+            display: block;
+            padding: 1rem;
+            border: 2px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .custom-radio input[type="radio"]:checked + label {
+            border-color: #3b82f6; /* blue-500 */
+            background-color: #eff6ff; /* blue-50 */
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+        .custom-radio label:hover {
+            border-color: #9ca3af; /* gray-400 */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex items-center justify-center min-h-screen p-4">
+
+    <div id="quiz-container" class="w-full max-w-2xl bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+        <!-- Cabeçalho do Quiz -->
+        <div class="mb-6 text-center">
+            <h1 class="text-3xl font-bold text-slate-900">Quiz: Tempo de Chuva</h1>
+            <p class="text-slate-500 mt-1">Teste seus conhecimentos sobre o livro de Carlos Almeida.</p>
+        </div>
+
+        <!-- Área do Quiz (será atualizada pelo JS) -->
+        <div id="quiz-area">
+            <div class="flex justify-between items-center mb-4">
+                <div id="question-counter" class="text-sm font-medium text-slate-600"></div>
+                <div id="score-counter" class="text-sm font-bold text-blue-600"></div>
+            </div>
+            
+            <div id="question-text" class="text-lg font-medium mb-6 min-h-[6rem]"></div>
+            
+            <div id="answer-options" class="space-y-3"></div>
+
+            <div id="feedback" class="mt-6 p-4 rounded-lg text-center font-semibold hidden"></div>
+
+            <div class="mt-8 flex justify-end">
+                <button id="submit-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-slate-300">
+                    Responder
+                </button>
+                <button id="next-btn" class="bg-slate-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-slate-800 transition-colors hidden">
+                    Próxima
+                </button>
+            </div>
+        </div>
+
+        <!-- Tela de Resultados (inicialmente oculta) -->
+        <div id="results-area" class="text-center hidden">
+            <h2 class="text-2xl font-bold mb-2">Quiz Finalizado!</h2>
+            <p class="text-slate-600 mb-6">Veja seu desempenho abaixo.</p>
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <p class="text-lg">Sua pontuação final é:</p>
+                <p id="final-score" class="text-5xl font-bold text-blue-600 my-2"></p>
+                <p id="final-message" class="text-slate-700 font-medium"></p>
+            </div>
+            <button id="restart-btn" class="mt-8 bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors">
+                Tentar Novamente
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- BANCO DE PERGUNTAS ---
+        const questions = [
+            {
+                question: 'Na crônica "Tempo de chuva", qual era a principal sensação que os dias chuvosos traziam ao narrador em sua infância?',
+                type: 'mcq',
+                options: [
+                    'Medo e solidão.',
+                    'Tédio e impaciência.',
+                    'Aconchego, união familiar e cumplicidade.',
+                    'Tristeza e melancolia.'
+                ],
+                answer: 'Aconchego, união familiar e cumplicidade.'
+            },
+            {
+                question: 'Qual é a frase final e impactante da menina na crônica "Clarice a bordo"?',
+                type: 'written',
+                answer: ['Pai, eu posso ir com o moço?', 'posso ir com o moço']
+            },
+            {
+                question: 'Em "Aquela gente", por que o motorista da cidade se irrita com os homens do campo?',
+                type: 'mcq',
+                options: [
+                    'Porque eles mentem sobre o caminho para Santa Luzia.',
+                    'Porque eles se recusam a dar informação.',
+                    'Porque eles respondem de forma literal e demorada, escondendo detalhes importantes.',
+                    'Porque eles cobram pela informação.'
+                ],
+                answer: 'Porque eles respondem de forma literal e demorada, escondendo detalhes importantes.'
+            },
+            {
+                question: 'Qual era o verdadeiro nome do personagem conhecido como "Zimbinho"?',
+                type: 'written',
+                answer: ['Orozimbo']
+            },
+            {
+                question: 'Qual era o "truque" usado em "Gente trabalhadeira" para conseguir clientes para a borracharia?',
+                type: 'written',
+                answer: ['eles criaram uma armadilha na estrada para furar os pneus', 'uma armadilha para furar pneus', 'furavam os pneus dos carros']
+            },
+            {
+                question: 'Qual frase é repetida comicamente pelos funcionários na crônica "Coisa melhor" para evitar o trabalho?',
+                type: 'mcq',
+                options: [
+                    'Isso não é comigo.',
+                    'Volte amanhã, por favor.',
+                    'Vou fazer coisa melhor.',
+                    'O chefe não está no momento.'
+                ],
+                answer: 'Vou fazer coisa melhor.'
+            },
+            {
+                question: 'Qual era o apelido que o mestre de obras Zé Inácio, da crônica "O candidato recomendado", odiava?',
+                type: 'written',
+                answer: ['Zé Macaco', 'ze macaco']
+            },
+            {
+                question: 'Em "O teste", qual é o verdadeiro motivo pelo qual a esposa faz perguntas sobre traição ao marido?',
+                type: 'mcq',
+                options: [
+                    'Ela realmente suspeitava dele.',
+                    'Ela queria um motivo para se separar.',
+                    'Ela estava respondendo a um teste de uma revista.',
+                    'Ela estava testando a sinceridade dele para uma surpresa.'
+                ],
+                answer: 'Ela estava respondendo a um teste de uma revista.'
+            },
+            {
+                question: 'Qual é o "caso de vida ou morte" na crônica de mesmo nome?',
+                type: 'written',
+                answer: ['o medo que um vizinho tem de uma barata', 'uma barata', 'medo de barata']
+            },
+            {
+                question: 'Na crônica "A caninana, o capeta e o babaca", quem era o personagem "babaca"?',
+                type: 'written',
+                answer: ['o pai']
+            },
+            {
+                question: 'O que o senhor de aparência aristocrática faz na estação de metrô em "O caso do aviãozinho"?',
+                type: 'written',
+                answer: ['faz um aviãozinho de papel', 'lança um aviãozinho de papel', 'brinca com um avião de papel']
+            },
+            {
+                question: 'Qual das crônicas abaixo é uma crítica direta à burocracia e à procrastinação no serviço público?',
+                type: 'mcq',
+                options: [
+                    '"O Zimbinho"',
+                    '"O polivalente"',
+                    '"Coisa melhor"',
+                    '"Gente trabalhadeira"'
+                ],
+                answer: '"Coisa melhor"'
+            }
+        ];
+
+        // --- ELEMENTOS DO DOM ---
+        const quizArea = document.getElementById('quiz-area');
+        const resultsArea = document.getElementById('results-area');
+        const questionCounterEl = document.getElementById('question-counter');
+        const scoreCounterEl = document.getElementById('score-counter');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const feedbackEl = document.getElementById('feedback');
+        const submitBtn = document.getElementById('submit-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const finalScoreEl = document.getElementById('final-score');
+        const finalMessageEl = document.getElementById('final-message');
+
+        // --- VARIÁVEIS DE ESTADO ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // --- FUNÇÕES ---
+
+        // Função para embaralhar as perguntas
+        function shuffleQuestions() {
+            for (let i = questions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questions[i], questions[j]] = [questions[j], questions[i]];
+            }
+        }
+
+        // Função para exibir a pergunta atual
+        function displayQuestion() {
+            // Reseta o estado anterior
+            feedbackEl.classList.add('hidden');
+            answerOptionsEl.innerHTML = '';
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+
+            // Pega a pergunta atual
+            const currentQuestion = questions[currentQuestionIndex];
+            
+            // Atualiza contadores e texto da pergunta
+            questionTextEl.textContent = currentQuestion.question;
+            questionCounterEl.textContent = `Pergunta ${currentQuestionIndex + 1} de ${questions.length}`;
+            scoreCounterEl.textContent = `Pontuação: ${score}`;
+
+            // Cria as opções de resposta
+            if (currentQuestion.type === 'mcq') {
+                answerOptionsEl.classList.add('custom-radio');
+                currentQuestion.options.forEach(option => {
+                    const optionId = option.replace(/\s+/g, '-').toLowerCase();
+                    const optionEl = document.createElement('div');
+                    optionEl.innerHTML = `
+                        <input type="radio" id="${optionId}" name="answer" value="${option}">
+                        <label for="${optionId}">${option}</label>
+                    `;
+                    answerOptionsEl.appendChild(optionEl);
+                });
+            } else if (currentQuestion.type === 'written') {
+                answerOptionsEl.classList.remove('custom-radio');
+                answerOptionsEl.innerHTML = `
+                    <input type="text" id="written-answer" placeholder="Digite sua resposta aqui..." class="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                `;
+            }
+        }
+
+        // Função para checar a resposta
+        function checkAnswer() {
+            const currentQuestion = questions[currentQuestionIndex];
+            let userAnswer;
+            let isCorrect = false;
+
+            if (currentQuestion.type === 'mcq') {
+                const selectedOption = document.querySelector('input[name="answer"]:checked');
+                if (!selectedOption) {
+                    alert('Por favor, selecione uma resposta.');
+                    return;
+                }
+                userAnswer = selectedOption.value;
+                if (userAnswer === currentQuestion.answer) {
+                    isCorrect = true;
+                }
+            } else if (currentQuestion.type === 'written') {
+                const writtenInput = document.getElementById('written-answer');
+                userAnswer = writtenInput.value.trim().toLowerCase();
+                // Permite múltiplas respostas corretas (variações)
+                isCorrect = currentQuestion.answer.some(correct_ans => userAnswer.includes(correct_ans.toLowerCase()));
+            }
+
+            // Exibe o feedback
+            feedbackEl.classList.remove('hidden');
+            if (isCorrect) {
+                score++;
+                feedbackEl.textContent = 'Correto!';
+                feedbackEl.className = 'mt-6 p-4 rounded-lg text-center font-semibold feedback-correct';
+            } else {
+                feedbackEl.textContent = 'Incorreto!';
+                if(currentQuestion.type === 'written'){
+                    feedbackEl.textContent += ` A resposta esperada era algo como: "${currentQuestion.answer[0]}"`;
+                }
+                feedbackEl.className = 'mt-6 p-4 rounded-lg text-center font-semibold feedback-incorrect';
+            }
+
+            // Atualiza a pontuação e os botões
+            scoreCounterEl.textContent = `Pontuação: ${score}`;
+            submitBtn.disabled = true;
+            submitBtn.classList.add('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        // Função para ir para a próxima pergunta
+        function handleNextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Função para mostrar os resultados finais
+        function showResults() {
+            quizArea.classList.add('hidden');
+            resultsArea.classList.remove('hidden');
+
+            const percentage = Math.round((score / questions.length) * 100);
+            finalScoreEl.textContent = `${percentage}%`;
+
+            let message = '';
+            if (percentage === 100) {
+                message = 'Excelente! Você conhece o livro como a palma da sua mão.';
+            } else if (percentage >= 70) {
+                message = 'Muito bem! Você tem um ótimo conhecimento sobre a obra.';
+            } else if (percentage >= 50) {
+                message = 'Bom trabalho! Que tal ler mais uma vez para fixar os detalhes?';
+            } else {
+                message = 'Não desanime! Estudar um pouco mais fará toda a diferença.';
+            }
+            finalMessageEl.textContent = message;
+        }
+
+        // Função para reiniciar o quiz
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            shuffleQuestions();
+            resultsArea.classList.add('hidden');
+            quizArea.classList.remove('hidden');
+            displayQuestion();
+        }
+
+        // --- EVENT LISTENERS ---
+        submitBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', handleNextQuestion);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // --- INICIALIZAÇÃO ---
+        shuffleQuestions();
+        displayQuestion();
+
+    </script>
+</body>
+</html>
