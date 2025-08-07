@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação: Monumento do Período Joanino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Reset e Configuração de Tela Cheia */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Evita barras de rolagem */
+            font-family: 'Roboto', sans-serif;
+            background-color: #1a1a1a;
+        }
+
+        /* --- CORREÇÃO DA ANIMAÇÃO --- */
+        /* A opacidade agora é controlada apenas pelo slide para uma transição suave. */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            padding: 4rem 6rem;
+            display: flex;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.7s ease-in-out, visibility 0s linear 0.7s; /* Fade out, depois esconde */
+            background-size: cover;
+            background-position: center center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transition-delay: 0s; /* Fade in imediato */
+        }
+
+        /* As animações dos filhos agora controlam apenas o MOVIMENTO, não a opacidade. */
+        .fade-in-up, .fade-in {
+            /* Define o estado inicial da transformação. A opacidade é herdada do slide. */
+            transform: translateY(30px);
+            /* Garante que os elementos comecem invisíveis junto com o slide */
+            opacity: 0;
+        }
+        
+        .active .fade-in-up, .active .fade-in {
+             /* A animação começa um pouco depois do slide começar a aparecer. */
+            animation: moveUp 0.9s ease-out 0.3s forwards;
+        }
+        
+        @keyframes moveUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Estilos de Texto */
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .slide-subtitle {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            color: #f0f0f0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .slide-text {
+            color: #333;
+            font-size: 1.25rem;
+            line-height: 1.7;
+        }
+
+        /* Placeholder de Imagem */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e9ecef;
+            border: 3px dashed #ced4da;
+            border-radius: 0.5rem;
+            color: #6c757d;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            text-align: center;
+            min-height: 400px; /* Garante altura mínima para o layout */
+        }
+
+        /* Barra de Progresso */
+        #progress-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: 100;
+        }
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #ffffff;
+            transition: width 0.4s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Título -->
+    <div id="slide-1" class="slide active items-center justify-center text-center bg-gray-900">
+        <div class="relative z-10">
+            <h1 class="slide-title text-7xl md:text-8xl fade-in-up">O Jardim Botânico</h1>
+            <p class="slide-subtitle mt-4 text-2xl md:text-3xl fade-in-up" style="animation-delay: 0.5s;">Um Monumento Vivo do Período Joanino</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: A Definição -->
+    <div id="slide-2" class="slide items-center justify-center bg-gray-800">
+        <div class="text-center max-w-4xl">
+            <h2 class="slide-title text-5xl fade-in-up">O que é um <span class="text-green-300">Monumento</span>?</h2>
+            <p class="slide-subtitle mt-6 text-2xl leading-relaxed fade-in-up" style="animation-delay: 0.5s;">
+                Vem do latim <i>monumentum</i>: "fazer lembrar". É um sinal do passado que nos possibilita lembrar de algo, alguém ou um valor importante, criando uma ligação entre os tempos: <strong>passado, presente e futuro.</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 3: Justificativa - O Passado -->
+    <div id="slide-3" class="slide flex-col md:flex-row items-center gap-12 bg-white">
+        <div class="w-full md:w-1/2">
+            <div class="fade-in">
+                <h2 class="font-bold text-5xl text-gray-800 mb-6" style="font-family: 'Playfair Display', serif;">A Ligação com o Passado</h2>
+                <div class="slide-text space-y-4">
+                    <p>Ele nos <strong>faz lembrar</strong> da chegada da Família Real e da transformação do Rio em sede do Império.</p>
+                    <p>Sua função original era <strong>científica e estratégica</strong>: aclimatar especiarias valiosas e quebrar monopólios comerciais.</p>
+                    <p>É um <strong>sinal</strong> do pensamento iluminista da época, que via a ciência como ferramenta de progresso.</p>
+                </div>
+            </div>
+        </div>
+        <div class="w-full md:w-1/2 h-full">
+            <div class="image-placeholder fade-in" style="animation-delay: 0.5s;">
+                <p>Insira sua imagem aqui</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Justificativa - Presente e Futuro -->
+    <div id="slide-4" class="slide flex-col md:flex-row-reverse items-center gap-12 bg-gray-100">
+        <div class="w-full md:w-1/2">
+            <div class="fade-in">
+                <h2 class="font-bold text-5xl text-gray-800 mb-6" style="font-family: 'Playfair Display', serif;">A Ponte para o Futuro</h2>
+                <div class="slide-text space-y-4">
+                    <p>Hoje, é um dos mais importantes <strong>centros de pesquisa</strong> botânica do mundo, um valor presente para a ciência.</p>
+                    <p>Para a sociedade, é um espaço de <strong>lazer, cultura e educação ambiental</strong>, um valor que se renova a cada visita.</p>
+                    <p>Sua missão de <strong>conservar espécies ameaçadas</strong> é a sua ligação mais forte com o futuro.</p>
+                </div>
+            </div>
+        </div>
+        <div class="w-full md:w-1/2 h-full">
+            <div class="image-placeholder fade-in" style="animation-delay: 0.5s;">
+                <p>Insira sua imagem aqui</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slide 5: Conclusão -->
+    <div id="slide-5" class="slide items-center justify-center text-center bg-gray-900">
+        <div class="relative z-10 max-w-4xl">
+            <h2 class="slide-title text-5xl fade-in-up">Um Monumento em Constante Construção</h2>
+            <p class="slide-subtitle mt-6 text-2xl leading-relaxed fade-in-up" style="animation-delay: 0.5s;">
+                O Jardim Botânico é um monumento porque não é uma memória congelada. É um legado dinâmico que se renova a cada dia, conectando de forma inseparável o passado, o presente e o futuro.
+            </p>
+        </div>
+    </div>
+
+    <!-- Barra de Progresso -->
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progress-bar');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            if (index >= slides.length) {
+                index = slides.length - 1;
+            }
+            if (index < 0) {
+                index = 0;
+            }
+            
+            currentSlide = index;
+
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+
+            const progressPercentage = ((index + 1) / slides.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                showSlide(currentSlide + 1);
+            } else if (event.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            }
+        });
+
+        window.onload = () => {
+            showSlide(currentSlide);
+        };
+    </script>
+
+</body>
+</html>
