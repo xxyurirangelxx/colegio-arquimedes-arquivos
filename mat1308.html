@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Estudos - Matemática 8º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .slide {
+            display: none;
+        }
+        .slide.active {
+            display: block;
+        }
+        /* Estilos para o feedback do quiz */
+        .correct-answer {
+            color: #16a34a; /* green-600 */
+        }
+        .incorrect-answer {
+            color: #dc2626; /* red-600 */
+        }
+        .correct-bg {
+            background-color: #dcfce7; /* green-100 */
+        }
+        .incorrect-bg {
+            background-color: #fee2e2; /* red-100 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Guia de Estudos Interativo</h1>
+            <p class="text-md text-gray-600 mt-2">Matemática - 8º Ano</p>
+        </header>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <!-- Barra de Progresso -->
+            <div id="progress-container" class="mb-6">
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <p id="progress-text" class="text-center text-sm text-gray-600 mt-2">Tema 1 de 5</p>
+            </div>
+
+            <!-- Container dos Slides -->
+            <div id="slide-container" class="min-h-[400px]">
+                <!-- Slide 1: Regra de Sinais -->
+                <div class="slide active">
+                    <h3 class="text-2xl font-semibold text-indigo-700 text-center mb-6">1. A Base de Tudo: Regra de Sinais</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold mb-2">Para Multiplicação e Divisão:</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><b>Sinais IGUAIS</b> = Resultado <b>POSITIVO (+)</b> | Ex: <code class="bg-gray-200 p-1 rounded">(-5) * (-3) = +15</code></li>
+                                <li><b>Sinais DIFERENTES</b> = Resultado <b>NEGATIVO (-)</b> | Ex: <code class="bg-gray-200 p-1 rounded">(-5) * 3 = -15</code></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Para Potenciação (Base Negativa):</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><b>Expoente PAR</b> = Resultado <b>POSITIVO (+)</b> | Ex: <code class="bg-gray-200 p-1 rounded">(-2)⁴ = +16</code></li>
+                                <li><b>Expoente ÍMPAR</b> = Resultado <b>NEGATIVO (-)</b> | Ex: <code class="bg-gray-200 p-1 rounded">(-2)³ = -8</code></li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="font-bold mb-2 text-red-600">Atenção: A Armadilha dos Parênteses!</h4>
+                            <p><code class="bg-gray-200 p-1 rounded">(-3)² = +9</code>, mas <code class="bg-gray-200 p-1 rounded">-3² = -9</code>. Sem parênteses, o expoente afeta só o número, não o sinal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Expressões Algébricas -->
+                <div class="slide">
+                    <h3 class="text-2xl font-semibold text-indigo-700 text-center mb-6">2. Expressões Algébricas</h3>
+                     <h4 class="font-bold mb-4 text-center">Regras de Ouro da Potenciação:</h4>
+                    <ul class="list-disc list-inside space-y-4 text-lg">
+                        <li><b>Multiplicação:</b> Mantenha a base e <b>SOME</b> os expoentes. <br><code class="bg-gray-200 p-1 rounded text-base">x² * x³ = x²⁺³ = x⁵</code></li>
+                        <li><b>Divisão:</b> Mantenha a base e <b>SUBTRAIA</b> os expoentes.<br><code class="bg-gray-200 p-1 rounded text-base">x⁵ / x² = x⁵⁻² = x³</code></li>
+                        <li><b>Potência de Potência:</b> Mantenha a base e <b>MULTIPLIQUE</b> os expoentes.<br><code class="bg-gray-200 p-1 rounded text-base">(x²)³ = x²*³ = x⁶</code></li>
+                    </ul>
+                </div>
+
+                <!-- Slide 3: Produtos Notáveis -->
+                <div class="slide">
+                    <h3 class="text-2xl font-semibold text-indigo-700 text-center mb-6">3. Produtos Notáveis</h3>
+                    <ul class="space-y-6">
+                        <li><b>Quadrado da Soma:</b> <code class="bg-gray-200 p-1 rounded">(a + b)² = a² + 2ab + b²</code><br><span class="text-sm text-gray-600">"O quadrado do primeiro, mais duas vezes o primeiro pelo segundo, mais o quadrado do segundo."</span></li>
+                        <li><b>Quadrado da Diferença:</b> <code class="bg-gray-200 p-1 rounded">(a - b)² = a² - 2ab + b²</code><br><span class="text-sm text-gray-600">"O quadrado do primeiro, menos duas vezes o primeiro pelo segundo, mais o quadrado do segundo."</span></li>
+                        <li><b>Produto da Soma pela Diferença:</b> <code class="bg-gray-200 p-1 rounded">(a + b)(a - b) = a² - b²</code><br><span class="text-sm text-gray-600">"O quadrado do primeiro menos o quadrado do segundo."</span></li>
+                    </ul>
+                </div>
+
+                <!-- Slide 4: Equações e Inequações -->
+                <div class="slide">
+                    <h3 class="text-2xl font-semibold text-indigo-700 text-center mb-6">4. Equações e Inequações</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold mb-2">Equação (=)</h4>
+                            <p>Busca um valor exato. Regra: trocou de lado, inverteu a operação (<code class="bg-gray-200 p-1 rounded">+</code> vira <code class="bg-gray-200 p-1 rounded">-</code>, <code class="bg-gray-200 p-1 rounded">*</code> vira <code class="bg-gray-200 p-1 rounded">/</code>).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Inequação (<, >)</h4>
+                            <p class="mb-2">Busca um conjunto de valores. Resolva como uma equação, mas com uma regra especial:</p>
+                            <p class="p-3 bg-red-100 text-red-800 rounded-md"><b>ATENÇÃO:</b> Ao multiplicar ou dividir os dois lados por um número <b>NEGATIVO</b>, você é <b>OBRIGADO A INVERTER</b> o sinal da inequação (<code class="bg-red-200 p-1 rounded"><</code> vira <code class="bg-red-200 p-1 rounded">></code>).</p>
+                            <p class="mt-2 text-sm text-gray-600">Ex: <code class="bg-gray-200 p-1 rounded">-2x < 10</code> vira <code class="bg-gray-200 p-1 rounded">x > -5</code>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Quadriláteros -->
+                <div class="slide">
+                    <h3 class="text-2xl font-semibold text-indigo-700 text-center mb-6">5. Propriedades dos Quadriláteros</h3>
+                    <ul class="list-disc list-inside space-y-4">
+                        <li><b>Paralelogramo:</b> Ângulos opostos iguais. Ângulos consecutivos somam 180°.</li>
+                        <li><b>Retângulo:</b> Diagonais iguais.</li>
+                        <li><b>Losango:</b> Diagonais perpendiculares (formam 90°).</li>
+                        <li><b>Quadrado:</b> O "filho perfeito". Tem tudo: diagonais iguais E perpendiculares.</li>
+                    </ul>
+                </div>
+
+                <!-- Slide 6: Quiz -->
+                <div class="slide" id="quiz-slide">
+                     <h2 class="text-2xl font-bold mb-6 text-center">Teste seu Conhecimento</h2>
+                    <form id="quiz-form" class="space-y-6">
+                        <!-- As 15 questões serão inseridas aqui pelo JS -->
+                    </form>
+                     <div id="results" class="hidden mt-8 text-center">
+                        <h3 id="score" class="text-2xl font-bold"></h3>
+                        <p id="feedback" class="text-gray-600 mt-2"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegação -->
+            <div id="navigation" class="flex justify-between items-center mt-8 pt-6 border-t">
+                <button id="prevBtn" class="bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
+                <button id="nextBtn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors">Próximo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const progressContainer = document.getElementById('progress-container');
+        const navigationContainer = document.getElementById('navigation');
+        const quizSlide = document.getElementById('quiz-slide');
+        const quizForm = document.getElementById('quiz-form');
+
+        let currentSlide = 0;
+        const totalStudySlides = slides.length - 1; // Exclui o slide do quiz
+
+        const questions = [
+            { q: "1. Qual o resultado de `(-2)³`?", o: ["A) 8", "B) -8", "C) -6"], a: "B" },
+            { q: "2. Como fica a expressão `x⁴ * x²` simplificada?", o: ["A) x⁸", "B) x⁶", "C) x²"], a: "B" },
+            { q: "3. Qual o resultado de `(x + 1)²`?", o: ["A) x² + 1", "B) x² + 2x + 1", "C) x² + x + 1"], a: "B" },
+            { q: "4. Se `-x > 5`, qual a solução correta para x?", o: ["A) x > -5", "B) x < 5", "C) x < -5"], a: "C" },
+            { q: "5. Qual quadrilátero possui diagonais que são SEMPRE iguais E perpendiculares?", o: ["A) Retângulo", "B) Losango", "C) Quadrado"], a: "C" },
+            { q: "6. Qual o resultado de `-5²` (sem parênteses)?", o: ["A) 25", "B) -25", "C) -10"], a: "B" },
+            { q: "7. Como fica a expressão `(y⁶) / (y³)` simplificada?", o: ["A) y³", "B) y²", "C) y⁹"], a: "A" },
+            { q: "8. Qual o resultado de `(x - 3)²`?", o: ["A) x² - 9", "B) x² - 6x - 9", "C) x² - 6x + 9"], a: "C" },
+            { q: "9. Se `2x + 1 = 11`, qual o valor de x?", o: ["A) 6", "B) 5", "C) 10"], a: "B" },
+            { q: "10. Em um losango, os ângulos opostos são sempre...?", o: ["A) Diferentes", "B) Iguais", "C) Somam 180°"], a: "B" },
+            { q: "11. Qual o resultado de `(-1)¹⁰`?", o: ["A) 1", "B) -1", "C) -10"], a: "A" },
+            { q: "12. Qual o resultado de `(2x²)³`?", o: ["A) 6x⁵", "B) 8x⁶", "C) 8x⁵"], a: "B" },
+            { q: "13. Se `x + 5 > 8`, qual a solução?", o: ["A) x > 3", "B) x < 3", "C) x > 13"], a: "A" },
+            { q: "14. Em qual quadrilátero as diagonais são sempre perpendiculares, mas não necessariamente iguais?", o: ["A) Retângulo", "B) Losango", "C) Quadrado"], a: "B" },
+            { q: "15. A expressão `a² - b²` é o resultado de qual produto?", o: ["A) (a - b)²", "B) (a + b)(a - b)", "C) (a + b)²"], a: "B" }
+        ];
+
+        const correctAnswers = {};
+        questions.forEach((item, index) => {
+            correctAnswers[`q${index + 1}`] = item.a;
+        });
+
+        function buildQuiz() {
+            let quizHTML = '';
+            questions.forEach((item, index) => {
+                const questionName = `q${index + 1}`;
+                quizHTML += `
+                    <div class="question-block">
+                        <p class="font-semibold text-lg mb-2">${item.q.replace(/`([^`]+)`/g, '<code class="bg-gray-200 p-1 rounded">$1</code>')}</p>
+                        <div class="space-y-2">
+                            ${item.o.map((option, i) => {
+                                const optionValue = String.fromCharCode(65 + i); // A, B, C
+                                return `<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"><input type="radio" name="${questionName}" value="${optionValue}" class="mr-3"> ${option}</label>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            quizHTML += `
+                <div class="text-center">
+                    <button type="submit" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-colors">
+                        Verificar Respostas
+                    </button>
+                </div>
+            `;
+            quizForm.innerHTML = quizHTML;
+        }
+
+        function showSlide(n) {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === n);
+            });
+            
+            if (n < totalStudySlides) {
+                progressContainer.style.display = 'block';
+                navigationContainer.style.display = 'flex';
+                const progress = ((n + 1) / totalStudySlides) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `Tema ${n + 1} de ${totalStudySlides}`;
+            } else {
+                progressContainer.style.display = 'none';
+                navigationContainer.style.display = 'none';
+            }
+
+            prevBtn.disabled = n === 0;
+            
+            if (n === totalStudySlides - 1) {
+                nextBtn.textContent = 'Iniciar Teste';
+            } else {
+                nextBtn.textContent = 'Próximo';
+            }
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+
+        quizForm.addEventListener('submit', e => {
+            e.preventDefault();
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            const resultsDiv = document.getElementById('results');
+            const scoreEl = document.getElementById('score');
+            const feedbackEl = document.getElementById('feedback');
+
+            document.querySelectorAll('.question-block label').forEach(label => {
+                label.classList.remove('correct-bg', 'incorrect-bg');
+            });
+
+            for (const question in correctAnswers) {
+                const selectedOption = quizForm.querySelector(`input[name="${question}"]:checked`);
+                if (selectedOption) {
+                    const selectedLabel = selectedOption.parentElement;
+                    if (selectedOption.value === correctAnswers[question]) {
+                        score++;
+                        selectedLabel.classList.add('correct-bg');
+                    } else {
+                        selectedLabel.classList.add('incorrect-bg');
+                        const correctLabel = quizForm.querySelector(`input[name="${question}"][value="${correctAnswers[question]}"]`).parentElement;
+                        correctLabel.classList.add('correct-bg');
+                    }
+                }
+            }
+
+            scoreEl.textContent = `Você acertou ${score} de ${totalQuestions} questões!`;
+
+            if (score === totalQuestions) {
+                feedbackEl.textContent = "Parabéns! Você está voando e pronto para a prova!";
+                scoreEl.className = 'text-2xl font-bold correct-answer';
+            } else if (score >= totalQuestions / 2) {
+                feedbackEl.textContent = "Bom trabalho! Revise os pontos que errou para garantir o 10.";
+                scoreEl.className = 'text-2xl font-bold text-yellow-600';
+            } else {
+                feedbackEl.textContent = "Continue estudando! Clique em 'Anterior' para revisar os tópicos.";
+                scoreEl.className = 'text-2xl font-bold incorrect-answer';
+            }
+
+            resultsDiv.classList.remove('hidden');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            
+            // Reativa a navegação para permitir revisão
+            navigationContainer.style.display = 'flex';
+            nextBtn.style.display = 'none'; // Esconde o botão 'próximo' no final
+        });
+        
+        // Inicia o guia
+        buildQuiz();
+        showSlide(currentSlide);
+    </script>
+
+</body>
+</html>
