@@ -43,7 +43,6 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
       padding: 20px;
-      text-align: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -52,12 +51,30 @@
       box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }
 
-    .card a {
-      text-decoration: none;
+    .card h3 {
+      margin-top: 0;
       color: #007bff;
+    }
+
+    .card p {
+      color: #6c757d;
+      font-size: 0.9em;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
       font-weight: bold;
-      display: block;
-      margin-top: 10px;
+      transition: background 0.2s;
+    }
+
+    .card a:hover {
+      background: #0056b3;
     }
 
     footer {
@@ -75,54 +92,35 @@
   </header>
 
   <main class="container">
-    <div class="painel" id="painel-arquivos">
-      <!-- Cards gerados via JS -->
-    </div>
+    <div class="painel" id="painel-arquivos"></div>
   </main>
 
   <footer>
-    <p>Hub de estudos - gerado automaticamente</p>
+    <p>Hub de estudos - gerado manualmente</p>
   </footer>
 
   <script>
-    async function carregarArquivos() {
-      try {
-        // Tenta listar arquivos do mesmo diretório
-        const resposta = await fetch(".");
-        const texto = await resposta.text();
-
-        // Extrai links .html
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(texto, "text/html");
-        const links = [...doc.querySelectorAll("a")]
-          .map(a => a.getAttribute("href"))
-          .filter(href => href && href.endsWith(".html") && href !== "index.html");
-
-        const painel = document.getElementById("painel-arquivos");
-
-        if (links.length === 0) {
-          painel.innerHTML = "<p>Nenhum arquivo HTML encontrado no repositório.</p>";
-          return;
-        }
-
-        links.forEach(link => {
-          const nome = link.replace(".html", "").replace(/_/g, " ");
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `
-            <h3>${nome}</h3>
-            <a href="${link}">📖 Abrir</a>
-          `;
-          painel.appendChild(card);
-        });
-      } catch (e) {
-        console.error("Erro ao carregar arquivos:", e);
-        document.getElementById("painel-arquivos").innerHTML = 
-          "<p>⚠️ Não foi possível carregar os arquivos automaticamente no GitHub Pages.</p>";
+    // 🔹 Lista manual de arquivos com título e descrição
+    const arquivos = [
+      {
+        file: "2008port.html",
+        titulo: "Português - 8º Ano",
+        descricao: "Resumo e teste da prova de 20/08"
       }
-    }
+    ];
 
-    carregarArquivos();
+    const painel = document.getElementById("painel-arquivos");
+
+    arquivos.forEach(arq => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <h3>${arq.titulo}</h3>
+        <p>${arq.descricao}</p>
+        <a href="${arq.file}">📖 Abrir</a>
+      `;
+      painel.appendChild(card);
+    });
   </script>
 </body>
 </html>
