@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20/08 Português</title>
+    <style>
+        :root {
+            --cor-fundo: #f8f9fa;
+            --cor-texto: #212529;
+            --cor-primaria: #007bff;
+            --cor-primaria-hover: #0056b3;
+            --cor-secundaria: #6c757d;
+            --cor-sucesso: #28a745;
+            --cor-erro: #dc3545;
+            --cor-aviso: #ffc107;
+            --cor-info: #17a2b8;
+            --cor-fundo-caixa: #ffffff;
+            --cor-borda: #dee2e6;
+            --sombra-caixa: 0 4px 8px rgba(0,0,0,0.05);
+            --raio-borda: 12px;
+            --cor-sucesso-fundo: #d4edda;
+            --cor-erro-fundo: #f8d7da;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-hover));
+            color: white;
+            padding: 40px 20px;
+            border-radius: var(--raio-borda);
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: var(--sombra-caixa);
+        }
+
+        header h1 {
+            margin-top: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0 0;
+    display: flex;
+    flex-wrap: wrap;   /* já estava ok */
+    justify-content: center;
+    gap: 12px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--cor-primaria);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: inline-block;   /* garante comportamento de bloco */
+    white-space: nowrap;     /* evita quebra estranha dentro do botão */
+    flex-shrink: 0;          /* impede que o botão seja "amassado" */
+}
+
+
+        nav a:hover, nav a:focus {
+            background-color: #fff;
+            color: var(--cor-primaria-hover);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        section {
+            background-color: var(--cor-fundo-caixa);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: var(--raio-borda);
+            box-shadow: var(--sombra-caixa);
+            border: 1px solid var(--cor-borda);
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--cor-primaria);
+            border-bottom: 3px solid var(--cor-primaria);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--cor-secundaria);
+            margin-top: 30px;
+        }
+        
+        .box {
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            border-left: 6px solid;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .box svg {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            margin-top: 3px;
+        }
+
+        .box-porque { background-color: #fff9e6; border-color: var(--cor-aviso); }
+        .box-erro { background-color: #fce8e6; border-color: var(--cor-erro); }
+        .box-dica { background-color: #e6f4ea; border-color: var(--cor-sucesso); }
+        .box-pratica { background-color: #e6f7ff; border-color: var(--cor-info); }
+
+        strong { color: var(--cor-primaria-hover); font-weight: 500; }
+        code {
+            background-color: #e9ecef;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.95em;
+        }
+
+        /* Estilos do Teste Final */
+        #teste-final-form fieldset {
+            border: 1px solid var(--cor-borda);
+            border-radius: var(--raio-borda);
+            margin-bottom: 25px;
+            padding: 20px;
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+        #teste-final-form fieldset:focus-within {
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            border-color: var(--cor-primaria);
+        }
+
+        #teste-final-form legend {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--cor-secundaria);
+            padding: 0 10px;
+        }
+
+        #teste-final-form label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid var(--cor-borda);
+        }
+
+        #teste-final-form label:hover {
+            background-color: #e3f2fd;
+            border-color: var(--cor-primaria);
+        }
+        
+        #teste-final-form input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .resposta-correta {
+            background-color: var(--cor-sucesso-fundo);
+            border-color: var(--cor-sucesso) !important;
+            font-weight: 500;
+        }
+        .resposta-errada {
+            background-color: var(--cor-erro-fundo);
+            border-color: var(--cor-erro) !important;
+        }
+        
+        .feedback-questao {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .feedback-correto { background-color: var(--cor-sucesso-fundo); color: #155724; }
+        .feedback-errado { background-color: var(--cor-erro-fundo); color: #721c24; }
+
+        .botoes-teste {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-teste {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .btn-teste:hover {
+            /* CORREÇÃO: Removido o 'transform' para garantir estabilidade do layout */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .btn-teste:active {
+            transform: translateY(1px); /* Mantido um pequeno efeito de clique que não afeta o layout */
+        }
+
+        #btn-corrigir { background-color: var(--cor-primaria); color: white; }
+        #btn-refazer { background-color: var(--cor-secundaria); color: white; }
+        #btn-imprimir { background-color: #343a40; color: white; }
+
+        #resultado-final {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: var(--raio-borda);
+            background-color: var(--cor-fundo-caixa);
+            border: 1px solid var(--cor-borda);
+            font-size: 1.2em;
+            display: none;
+        }
+
+        @media print {
+            body { box-shadow: none; padding: 0; margin: 0; font-family: sans-serif; }
+            header, .botoes-teste, nav { display: none; }
+            .container, section { box-shadow: none; margin: 0; padding: 10px 0; max-width: 100%; border: none; }
+            .resposta-correta, .resposta-errada { border: 1px solid #ccc; }
+            .box { background-color: #eee !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Resumo Prova 20/08 Português</h1>
+            <nav>
+                <ul>
+                    <li><a href="#tema1">Textos Normativos</a></li>
+                    <li><a href="#tema2">Concordância</a></li>
+                    <li><a href="#tema3">Abaixo-assinado</a></li>
+                    <li><a href="#tema4">Texto Expositivo</a></li>
+                    <li><a href="#tema5">Palavras Compostas</a></li>
+                    <li><a href="#teste-final">Teste Final</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- TEMA 1: TEXTOS NORMATIVOS -->
+            <section id="tema1">
+                <h2>1. Textos Normativos, Leis e Estatutos</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Para você entender que as regras que organizam nossa vida, da escola ao país, são textos com uma estrutura e linguagem especiais, e saber lê-los é um ato de cidadania.</div>
+                </div>
+
+                <h3>O que são, de verdade?</h3>
+                <p>Pense neles como o "manual de instruções" da vida em sociedade. São textos que não contam uma história nem dão uma opinião: eles <strong>ditam as regras do jogo</strong>. A função deles é clara: organizar, regular e padronizar comportamentos para que todos possam conviver em harmonia e com justiça.</p>
+
+                <h3>Características Principais</h3>
+                <ul>
+                    <li><strong>Linguagem Impessoal:</strong> O texto não diz "Eu acho que você deve...". Ele diz "O cidadão deve...". Não tem autor, não tem "eu".</li>
+                    <li><strong>Objetividade e Clareza:</strong> A regra precisa ser entendida por todos da mesma forma, sem margem para interpretações diferentes.</li>
+                    <li><strong>Verbos de Poder (Modalizadores):</strong> Usam palavras que indicam obrigação (<code>dever</code>, <code>será</code>), permissão (<code>poderá</code>, <code>é facultado</code>) ou proibição (<code>é vedado</code>, <code>é proibido</code>).</li>
+                    <li><strong>Estrutura Lógica:</strong> São organizados em partes (títulos, capítulos, artigos, parágrafos, incisos) para que você encontre a informação que precisa facilmente.</li>
+                </ul>
+
+                <div class="box box-pratica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <div>
+                        <h4>Na Prática: Desmontando um Artigo</h4>
+                        <p>Veja este artigo do Estatuto da Criança e do Adolescente (ECA):</p>
+                        <p><code>Art. 16. O direito à liberdade compreende os seguintes aspectos:</code><br>
+                        <code>I - ir, vir e estar nos logradouros públicos e espaços comunitários, ressalvadas as restrições legais;</code><br>
+                        <code>II - opinião e expressão;</code><br>
+                        <code>III - crença e culto religioso;</code></p>
+                        <ul>
+                            <li><strong>Art. 16:</strong> É a regra principal, o tema: "direito à liberdade".</li>
+                            <li><strong>Incisos I, II, III:</strong> São a lista que detalha o que faz parte dessa liberdade. Fica muito mais organizado do que um texto corrido.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box box-erro">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 13.5L7 12l1.5-1.5L10.5 12l4.5-4.5L16.5 9l-6 6z" transform="rotate(45 12 12)"/></svg>
+                    <div>
+                        <h4>Erros Comuns e Como Evitar</h4>
+                        <p><strong>Erro:</strong> Achar que "lei" é só para advogados. <br>
+                        <strong>Como evitar:</strong> Entenda que leis como o Código de Defesa do Consumidor ou o Estatuto do Idoso afetam seu dia a dia diretamente. Saber o básico sobre elas te dá poder para defender seus direitos e os de sua família.</p>
+                    </div>
+                </div>
+
+                <div class="box box-dica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.01 16c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm1.5-4h-3c-.28 0-.5-.22-.5-.5v-5c0-.28.22-.5.5-.5h3c.28 0 .5.22.5.5v5c0 .28-.22-.5-.5.5z"/></svg>
+                    <div>
+                        <h4>Dicas de Prova</h4>
+                        <p>As questões geralmente não pedem para você decorar leis. Elas te dão um trecho e perguntam: <strong>Qual a finalidade deste artigo?</strong> (Proibir, permitir, obrigar?). Ou: <strong>A quem se destina esta regra?</strong> Fique atento aos verbos e à estrutura para responder com segurança.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEMA 2: CONCORDÂNCIA -->
+            <section id="tema2">
+                <h2>2. Concordância Nominal e Verbal</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Porque concordância é a "cola" que une as palavras de uma frase. Usá-la corretamente torna seu texto claro, profissional e muito mais fácil de entender. É a base da escrita correta.</div>
+                </div>
+
+                <h3>O que é, de verdade?</h3>
+                <p>Concordar é fazer as palavras "conversarem" entre si. É um princípio de harmonia.</p>
+                <ul>
+                    <li><strong>Concordância Nominal:</strong> O substantivo é o "chefe". Artigos, adjetivos, pronomes e numerais são os "funcionários" e devem concordar com o chefe em gênero (masculino/feminino) e número (singular/plural). Ex: <code>Aqueles dois meninos altos...</code> (tudo no masculino plural para concordar com "meninos").</li>
+                    <li><strong>Concordância Verbal:</strong> O sujeito é o "chefe". O verbo é o "funcionário" e deve concordar com o chefe em número (singular/plural) e pessoa (eu, nós, eles...). Ex: <code>Nós estudamos muito.</code> (verbo concorda com "Nós").</li>
+                </ul>
+
+                <h3>Casos Especiais que Adoram Cair na Prova</h3>
+                <h4>Concordância Nominal</h4>
+                <ul>
+                    <li><strong>Meio / Meia:</strong> <code>Meio</code> (invariável) = um pouco. <code>Meia</code> (variável) = metade.
+                        <ul>
+                            <li>Certo: "Ela está <strong>meio</strong> triste." (um pouco triste)</li>
+                            <li>Errado: "Ela está meia triste."</li>
+                            <li>Certo: "Bebi <strong>meia</strong> garrafa de água." (metade)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Bastante / Bastantes:</strong> <code>Bastante</code> (invariável) = muito. <code>Bastantes</code> (variável) = suficientes, vários. Dica: se der pra trocar por "muitos(as)", use "bastantes".
+                        <ul>
+                            <li>Certo: "Eles conversaram <strong>bastante</strong>." (muito)</li>
+                            <li>Certo: "Havia problemas <strong>bastantes</strong> para resolver." (muitos problemas)</li>
+                        </ul>
+                    </li>
+                </ul>
+                <h4>Concordância Verbal</h4>
+                <ul>
+                    <li><strong>Verbo HAVER (sentido de existir):</strong> É o "rebelde". Nunca vai para o plural.
+                        <ul>
+                            <li>Certo: "<strong>Havia</strong> dez pessoas na sala."</li>
+                            <li>Errado: "Haviam dez pessoas na sala."</li>
+                        </ul>
+                    </li>
+                    <li><strong>Verbo FAZER (tempo):</strong> Outro "rebelde". Fica sempre no singular.
+                        <ul>
+                            <li>Certo: "<strong>Faz</strong> cinco anos que moro aqui."</li>
+                            <li>Errado: "Fazem cinco anos que moro aqui."</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <div class="box box-pratica">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <div>
+                        <h4>Na Prática: Corrija o Parágrafo</h4>
+                        <p><strong>Texto original com erros:</strong> "Fazem duas semanas que as coisas estão meia complicadas. Haviam bastantes motivos para preocupação, mas hoje os problemas parece menores."</p>
+                        <p><strong>Texto corrigido:</strong> "<strong>Faz</strong> duas semanas que as coisas estão <strong>meio</strong> complicadas. <strong>Havia</strong> motivos <strong>bastantes</strong> para preocupação, mas hoje os problemas <strong>parecem</strong> menores."</p>
+                    </div>
+                </div>
+
+                <div class="box box-dica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.01 16c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm1.5-4h-3c-.28 0-.5-.22-.5-.5v-5c0-.28.22-.5.5-.5h3c.28 0 .5.22.5.5v5c0 .28-.22-.5-.5.5z"/></svg>
+                    <div>
+                        <h4>Dicas de Prova</h4>
+                        <p>A prova vai te testar exatamente nos casos especiais! Procure por frases com <code>haver</code>, <code>fazer</code>, <code>meio</code> e <code>bastante</code>. Outra pegadinha comum é com sujeito posposto (depois do verbo): "Chegou na festa o noivo e os padrinhos". O verbo deveria estar no plural para concordar: "Chegaram...".</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TEMA 3: ABAIXO-ASSINADO -->
+            <section id="tema3">
+                <h2>3. O Abaixo-assinado</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Porque o abaixo-assinado é uma das ferramentas mais poderosas da cidadania. Ele mostra que a união faz a força e que sua escrita pode, sim, mudar a realidade da sua escola, do seu bairro ou da sua cidade.</div>
+                </div>
+
+                <h3>O que é, de verdade?</h3>
+                <p>É um tipo de carta formal e coletiva. Em vez de uma pessoa pedir algo, um grupo de pessoas se une para fazer uma solicitação a uma autoridade (diretor, prefeito, síndico). Cada assinatura funciona como um voto de apoio, mostrando que o problema afeta muita gente e que a solução é um desejo comum.</p>
+
+                <h3>A Receita do Bolo: Estrutura Essencial</h3>
+                <ol>
+                    <li><strong>Vocativo (O Destinatário):</strong> Para quem você está escrevendo? Seja formal. Ex: <code>"Ilustríssima Senhora Diretora do Colégio Aprender"</code>.</li>
+                    <li><strong>Corpo do Texto (O Recheio):</strong> Aqui você tem duas missões:
+                        <ul>
+                            <li><strong>Apresentar o problema:</strong> Explique o que está acontecendo de forma clara e objetiva.</li>
+                            <li><strong>Justificar o pedido:</strong> Apresente argumentos. Por que a mudança é necessária? Quem será beneficiado?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Solicitação (O Pedido):</strong> A parte mais importante. Deixe explícito o que vocês querem. Ex: <code>"Diante do exposto, nós, alunos abaixo-assinados, solicitamos a instalação de bebedouros de água gelada no pátio."</code></li>
+                    <li><strong>Fechamento e Data:</strong> Uma despedida formal (<code>"Atenciosamente,"</code> ou <code>"Respeitosamente,"</code>) e o local e data.</li>
+                    <li><strong>Lista de Assinaturas:</strong> A prova de que não é só você que quer a mudança. Geralmente em colunas: Nome Completo, Documento (RG ou Turma), Assinatura.</li>
+                </ol>
+
+                <div class="box box-pratica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <div>
+                        <h4>Na Prática: Mini-Roteiro</h4>
+                        <p>Quer pedir mais livros de ficção para a biblioteca da escola? Siga os passos:</p>
+                        <ol>
+                            <li><strong>Vocativo:</strong> "À Coordenação Pedagógica e Direção da Escola..."</li>
+                            <li><strong>Problema:</strong> "O acervo atual da biblioteca é excelente para pesquisas, mas carece de obras de literatura jovem e ficção recentes, o que desestimula o hábito da leitura por prazer."</li>
+                            <li><strong>Justificativa:</strong> "A leitura por prazer desenvolve a criatividade, o vocabulário e o senso crítico. Um acervo mais moderno e atrativo aumentaria o número de empréstimos e formaria mais leitores."</li>
+                            <li><strong>Pedido:</strong> "Por isso, solicitamos que parte da verba de aquisição de livros seja destinada à compra de títulos de ficção contemporânea sugeridos pelos alunos."</li>
+                            <li><strong>Coletar assinaturas!</strong></li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="box box-erro">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 13.5L7 12l1.5-1.5L10.5 12l4.5-4.5L16.5 9l-6 6z" transform="rotate(45 12 12)"/></svg>
+                    <div>
+                        <h4>Erros Comuns e Como Evitar</h4>
+                        <p><strong>Erro:</strong> Usar linguagem agressiva ou emotiva. "É um absurdo não termos isso! Estamos indignados!"<br>
+                        <strong>Como evitar:</strong> Troque a emoção pela razão. Em vez de reclamar, argumente. A formalidade e o respeito mostram maturidade e aumentam a chance de o seu pedido ser levado a sério.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TEMA 4: TEXTO EXPOSITIVO -->
+            <section id="tema4">
+                <h2>4. Texto Didático-Expositivo</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Porque 90% do que você estuda está nesse formato! Entender como um texto expositivo é construído te ajuda a "hackear" seus estudos: você aprende a achar a informação principal, a entender a lógica do autor e a reter o conhecimento com mais facilidade.</div>
+                </div>
+
+                <h3>O que é, de verdade?</h3>
+                <p>É o texto do "professor". Sua única missão é <strong>ensinar, informar e explicar</strong> um conceito, fato ou teoria. Ele não quer te convencer de uma opinião, apenas apresentar o conhecimento de forma clara e organizada. Seus livros didáticos, verbetes de enciclopédia, documentários e artigos de divulgação científica são todos textos expositivos.</p>
+
+                <h3>As Ferramentas do Texto Expositivo</h3>
+                <p>Para conseguir explicar algo bem, o autor usa vários recursos. Fique de olho neles:</p>
+                <ul>
+                    <li><strong>Definição:</strong> Responde à pergunta "O que é?". Ex: "Fotossíntese <strong>é o processo</strong> pelo qual as plantas produzem seu alimento."</li>
+                    <li><strong>Exemplificação:</strong> Traz o conceito para a realidade. Ex: "Mamíferos são animais que amamentam seus filhotes, <strong>como cães, gatos e baleias</strong>."</li>
+                    <li><strong>Comparação:</strong> Mostra semelhanças e diferenças. Ex: "<strong>Assim como os pulmões</strong>, as brânquias também realizam trocas gasosas."</li>
+                    <li><strong>Classificação:</strong> Organiza em grupos. Ex: "Os vertebrados <strong>se dividem em</strong> cinco classes: peixes, anfíbios, répteis, aves e mamíferos."</li>
+                </ul>
+                
+                <div class="box box-pratica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <div>
+                        <h4>Na Prática: Como Estudar um Texto Expositivo</h4>
+                        <ol>
+                            <li><strong>Primeira Leitura:</strong> Leia o texto todo para ter uma ideia geral do assunto.</li>
+                            <li><strong>Segunda Leitura (Ativa):</strong> Leia de novo, agora com um marca-texto. Grife as <strong>definições</strong> (geralmente a ideia principal do parágrafo) e os <strong>exemplos</strong> mais importantes.</li>
+                            <li><strong>Crie um Esquema:</strong> Em uma folha de caderno, transforme o que você grifou em um mapa mental ou um resumo com tópicos. Isso força seu cérebro a organizar a informação.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="box box-erro">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 13.5L7 12l1.5-1.5L10.5 12l4.5-4.5L16.5 9l-6 6z" transform="rotate(45 12 12)"/></svg>
+                    <div>
+                        <h4>Erros Comuns e Como Evitar</h4>
+                        <p><strong>Erro:</strong> Confundir texto expositivo com texto argumentativo. <br>
+                        <strong>Como evitar:</strong> Faça a "pergunta da opinião". O texto está defendendo um lado? Está tentando te convencer de que algo é bom ou ruim? Se a resposta for não, e ele apenas apresenta fatos (Ex: "O Brasil tem 6 biomas"), é expositivo. Se a resposta for sim (Ex: "É preciso preservar os biomas brasileiros"), é argumentativo.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TEMA 5: PALAVRAS COMPOSTAS -->
+            <section id="tema5">
+                <h2>5. Formação de Palavras Compostas</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Para entender que a língua portuguesa é viva e sempre cria palavras novas. Saber como elas são formadas e como usar o hífen corretamente mostra domínio da ortografia e enriquece seu vocabulário.</div>
+                </div>
+
+                <h3>O que é, de verdade?</h3>
+                <p>É como montar um "Lego" de palavras. Você pega duas ou mais peças (palavras simples) e as junta para criar uma palavra nova, com um significado próprio. Existem duas maneiras principais de fazer essa montagem:</p>
+
+                <h3>Processos de Composição</h3>
+                <ul>
+                    <li><strong>Justaposição (Juntar lado a lado):</strong> As palavras se unem, mas nenhuma delas se machuca no processo. Elas continuam inteiras, sem perder letras ou sons.
+                        <ul>
+                            <li>Com hífen: <code>guarda-chuva</code>, <code>couve-flor</code>, <code>segunda-feira</code>.</li>
+                            <li>Sem hífen: <code>passatempo</code> (passa + tempo), <code>girassol</code> (gira + sol).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Aglutinação (Fundir e misturar):</strong> As palavras se unem de forma tão intensa que pelo menos uma delas perde uma parte (letras ou sons). Elas se "fundem".
+                        <ul>
+                            <li><code>planalto</code> (de plano + alto)</li>
+                            <li><code>embora</code> (de em + boa + hora)</li>
+                            <li><code>fidalgo</code> (de filho + de + algo)</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>O Desafio do Hífen (Regras Essenciais)</h3>
+                <p>O Acordo Ortográfico mudou muita coisa. O segredo é focar nas regras principais:</p>
+                <ul>
+                    <li><strong>Vogais iguais se separam:</strong> Se o prefixo termina com uma vogal e a palavra seguinte começa com a MESMA vogal, use hífen. Ex: <code>micro-ondas</code>, <code>anti-inflamatório</code>.</li>
+                    <li><strong>Vogais diferentes se juntam:</strong> Se as vogais forem DIFERENTES, junte tudo. Ex: <code>autoescola</code>, <code>infraestrutura</code>.</li>
+                    <li><strong>Cuidado com R e S:</strong> Se a palavra seguinte começa com R ou S, tire o hífen e dobre a consoante. Ex: <code>antissocial</code>, <code>contrarregra</code>, <code>ultrassom</code>.</li>
+                </ul>
+
+                <div class="box box-pratica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <div>
+                        <h4>Na Prática: Junte as Palavras</h4>
+                        <ul>
+                            <li><code>anti</code> + <code>higiênico</code> = <strong>anti-higiênico</strong> (regra do H)</li>
+                            <li><code>auto</code> + <code>análise</code> = <strong>autoanálise</strong> (vogais diferentes)</li>
+                            <li><code>contra</code> + <code>ataque</code> = <strong>contra-ataque</strong> (vogais iguais)</li>
+                            <li><code>mini</code> + <code>saia</code> = <strong>minissaia</strong> (regra do S)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TESTE FINAL -->
+            <section id="teste-final">
+                <h2>Teste Final - Pratique o que você aprendeu!</h2>
+                <p>Responda às 20 questões abaixo. Ao final, clique em "Corrigir" para ver seu resultado.</p>
+                
+                <form id="teste-final-form">
+                    <fieldset data-answer="B">
+                        <legend>Questão 1</legend>
+                        <p>Qual é a principal finalidade de um texto normativo, como uma lei ou um estatuto?</p>
+                        <label><input type="radio" name="q1" value="A"> Divertir o leitor com histórias criativas.</label>
+                        <label><input type="radio" name="q1" value="B"> Estabelecer regras e orientar o comportamento social.</label>
+                        <label><input type="radio" name="q1" value="C"> Expressar os sentimentos e opiniões do autor.</label>
+                        <label><input type="radio" name="q1" value="D"> Informar sobre um acontecimento recente.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 2</legend>
+                        <p>No trecho de uma lei: "Art. 5º. É <strong>dever</strong> da família, da comunidade, da sociedade em geral e do poder público assegurar, com absoluta prioridade, a efetivação dos direitos referentes à vida...", a palavra destacada indica:</p>
+                        <label><input type="radio" name="q2" value="A"> Uma permissão.</label>
+                        <label><input type="radio" name="q2" value="B"> Uma sugestão.</label>
+                        <label><input type="radio" name="q2" value="C"> Uma proibição.</label>
+                        <label><input type="radio" name="q2" value="D"> Uma obrigação.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 3</legend>
+                        <p>A linguagem utilizada em textos normativos é caracterizada por ser:</p>
+                        <label><input type="radio" name="q3" value="A"> Objetiva, formal e impessoal.</label>
+                        <label><input type="radio" name="q3" value="B"> Subjetiva, informal e pessoal.</label>
+                        <label><input type="radio" name="q3" value="C"> Poética, cheia de metáforas.</label>
+                        <label><input type="radio" name="q3" value="D"> Regional, com muitas gírias.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 4</legend>
+                        <p>Artigos, parágrafos e incisos são elementos da ________ de um texto normativo.</p>
+                        <label><input type="radio" name="q4" value="A"> opinião</label>
+                        <label><input type="radio" name="q4" value="B"> conclusão</label>
+                        <label><input type="radio" name="q4" value="C"> estrutura</label>
+                        <label><input type="radio" name="q4" value="D"> linguagem</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <!-- Questões sobre Concordância -->
+                    <fieldset data-answer="C">
+                        <legend>Questão 5</legend>
+                        <p>Assinale a alternativa em que a concordância nominal está CORRETA:</p>
+                        <label><input type="radio" name="q5" value="A"> A aluna ficou meia nervosa com a prova.</label>
+                        <label><input type="radio" name="q5" value="B"> Comprei bastantes laranjas, mas elas não estavam boa.</label>
+                        <label><input type="radio" name="q5" value="C"> Seguem anexas as fotos solicitadas.</label>
+                        <label><input type="radio" name="q5" value="D"> É proibido entrada de estranhos neste local.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 6</legend>
+                        <p>Complete a frase corretamente: "_________ dois anos que não viajo. _________ muitas coisas para fazer."</p>
+                        <label><input type="radio" name="q6" value="A"> Faz / Havia</label>
+                        <label><input type="radio" name="q6" value="B"> Fazem / Haviam</label>
+                        <label><input type="radio" name="q6" value="C"> Faz / Haviam</label>
+                        <label><input type="radio" name="q6" value="D"> Fazem / Havia</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 7</legend>
+                        <p>A concordância verbal está INCORRETA em:</p>
+                        <label><input type="radio" name="q7" value="A"> O bando de pássaros voou para longe.</label>
+                        <label><input type="radio" name="q7" value="B"> Mais de um aluno chegou atrasado.</label>
+                        <label><input type="radio" name="q7" value="C"> Eu e minha irmã fomos ao cinema.</label>
+                        <label><input type="radio" name="q7" value="D"> Vende-se casas novas neste bairro.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="B">
+                        <legend>Questão 8</legend>
+                        <p>Na frase "Ela comeu só ________ fatia do bolo, pois já estava ________ satisfeita.", as lacunas são preenchidas corretamente por:</p>
+                        <label><input type="radio" name="q8" value="A"> meia / meia</label>
+                        <label><input type="radio" name="q8" value="B"> meia / meio</label>
+                        <label><input type="radio" name="q8" value="C"> meio / meio</label>
+                        <label><input type="radio" name="q8" value="D"> meio / meia</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <!-- Questões sobre Abaixo-assinado -->
+                    <fieldset data-answer="B">
+                        <legend>Questão 9</legend>
+                        <p>Qual das partes abaixo NÃO é um elemento essencial de um abaixo-assinado?</p>
+                        <label><input type="radio" name="q9" value="A"> Vocativo (a quem se dirige).</label>
+                        <label><input type="radio" name="q9" value="B"> Uma piada para descontrair.</label>
+                        <label><input type="radio" name="q9" value="C"> Exposição do problema e solicitação.</label>
+                        <label><input type="radio" name="q9" value="D"> Espaço para nome e assinatura dos apoiadores.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 10</legend>
+                        <p>O tom e a linguagem que devem ser usados em um abaixo-assinado são:</p>
+                        <label><input type="radio" name="q10" value="A"> Formais e respeitosos.</label>
+                        <label><input type="radio" name="q10" value="B"> Informais e cheios de gírias.</label>
+                        <label><input type="radio" name="q10" value="C"> Agressivos e exigentes.</label>
+                        <label><input type="radio" name="q10" value="D"> Poéticos e sentimentais.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 11</legend>
+                        <p>Para que serve um abaixo-assinado?</p>
+                        <label><input type="radio" name="q11" value="A"> Para contar uma história pessoal.</label>
+                        <label><input type="radio" name="q11" value="B"> Para publicar um artigo de opinião no jornal.</label>
+                        <label><input type="radio" name="q11" value="C"> Para fazer uma solicitação coletiva a uma autoridade.</label>
+                        <label><input type="radio" name="q11" value="D"> Para convidar pessoas para uma festa.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 12</legend>
+                        <p>Em um abaixo-assinado que solicita a construção de uma rampa de acesso na escola, a parte "À Direção do Colégio Saber" corresponde ao:</p>
+                        <label><input type="radio" name="q12" value="A"> Corpo do texto.</label>
+                        <label><input type="radio" name="q12" value="B"> Pedido.</label>
+                        <label><input type="radio" name="q12" value="C"> Fechamento.</label>
+                        <label><input type="radio" name="q12" value="D"> Vocativo.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <!-- Questões sobre Texto Expositivo -->
+                    <fieldset data-answer="A">
+                        <legend>Questão 13</legend>
+                        <p>O principal objetivo de um texto didático-expositivo é:</p>
+                        <label><input type="radio" name="q13" value="A"> Informar e explicar um assunto.</label>
+                        <label><input type="radio" name="q13" value="B"> Contar uma história de ficção.</label>
+                        <label><input type="radio" name="q13" value="C"> Convencer o leitor a tomar uma atitude.</label>
+                        <label><input type="radio" name="q13" value="D"> Descrever um lugar em detalhes.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 14</legend>
+                        <p>Qual dos itens abaixo é um exemplo de texto didático-expositivo?</p>
+                        <label><input type="radio" name="q14" value="A"> Um poema de amor.</label>
+                        <label><input type="radio" name="q14" value="B"> Uma receita de bolo.</label>
+                        <label><input type="radio" name="q14" value="C"> Um capítulo do seu livro de Ciências.</label>
+                        <label><input type="radio" name="q14" value="D"> Uma carta para um amigo.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="B">
+                        <legend>Questão 15</legend>
+                        <p>Quando um texto expositivo diz "A fotossíntese é o processo realizado pelas plantas para a produção de energia...", ele está usando o recurso da:</p>
+                        <label><input type="radio" name="q15" value="A"> Comparação.</label>
+                        <label><input type="radio" name="q15" value="B"> Definição.</label>
+                        <label><input type="radio" name="q15" value="C"> Opinião.</label>
+                        <label><input type="radio" name="q15" value="D"> Narração.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="D">
+                        <legend>Questão 16</legend>
+                        <p>A principal diferença entre um texto expositivo e um argumentativo é que o expositivo busca ________, enquanto o argumentativo busca ________.</p>
+                        <label><input type="radio" name="q16" value="A"> emocionar / informar</label>
+                        <label><input type="radio" name="q16" value="B"> convencer / narrar</label>
+                        <label><input type="radio" name="q16" value="C"> narrar / convencer</label>
+                        <label><input type="radio" name="q16" value="D"> informar / convencer</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <!-- Questões sobre Palavras Compostas -->
+                    <fieldset data-answer="A">
+                        <legend>Questão 17</legend>
+                        <p>As palavras "planalto" (plano + alto) e "aguardente" (água + ardente) são formadas por:</p>
+                        <label><input type="radio" name="q17" value="A"> Composição por aglutinação.</label>
+                        <label><input type="radio" name="q17" value="B"> Composição por justaposição.</label>
+                        <label><input type="radio" name="q17" value="C"> Derivação prefixal.</label>
+                        <label><input type="radio" name="q17" value="D"> Derivação sufixal.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 18</legend>
+                        <p>Qual das alternativas contém uma palavra formada por justaposição?</p>
+                        <label><input type="radio" name="q18" value="A"> Infelizmente.</label>
+                        <label><input type="radio" name="q18" value="B"> Embora.</label>
+                        <label><input type="radio" name="q18" value="C"> Passatempo.</label>
+                        <label><input type="radio" name="q18" value="D"> Dentista.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 19</legend>
+                        <p>Assinale a alternativa em que a palavra composta está escrita de forma CORRETA, de acordo com as novas regras ortográficas.</p>
+                        <label><input type="radio" name="q19" value="A"> Microondas.</label>
+                        <label><input type="radio" name="q19" value="B"> Anti-social.</label>
+                        <label><input type="radio" name="q19" value="C"> Auto-escola.</label>
+                        <label><input type="radio" name="q19" value="D"> Couve-flor.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="B">
+                        <legend>Questão 20</legend>
+                        <p>Na formação da palavra "girassol", ocorre justaposição. O 's' é dobrado para:</p>
+                        <label><input type="radio" name="q20" value="A"> Indicar que é uma palavra estrangeira.</label>
+                        <label><input type="radio" name="q20" value="B"> Manter o som de /s/ entre duas vogais.</label>
+                        <label><input type="radio" name="q20" value="C"> Facilitar a separação silábica.</label>
+                        <label><input type="radio" name="q20" value="D"> Diferenciar de "gira-sol", que não existe.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    <div class="botoes-teste">
+                        <button type="submit" id="btn-corrigir" class="btn-teste">Corrigir</button>
+                        <button type="button" id="btn-refazer" class="btn-teste">Refazer</button>
+                        <button type="button" id="btn-imprimir" class="btn-teste">Imprimir / Salvar PDF</button>
+                    </div>
+                </form>
+
+                <div id="resultado-final" role="alert" aria-live="assertive"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('teste-final-form');
+            const btnCorrigir = document.getElementById('btn-corrigir');
+            const btnRefazer = document.getElementById('btn-refazer');
+            const btnImprimir = document.getElementById('btn-imprimir');
+            const resultadoFinalDiv = document.getElementById('resultado-final');
+            const fieldsets = form.querySelectorAll('fieldset');
+
+            const feedbacks = {
+                q1: "A função dos textos normativos é regular e organizar a sociedade por meio de regras.",
+                q2: "O verbo 'dever' em contextos legais expressa uma obrigação, uma responsabilidade.",
+                q3: "A impessoalidade e a objetividade garantem que a norma seja clara e universal.",
+                q4: "A estrutura organizada facilita a consulta e a compreensão das leis.",
+                q5: "'Anexas' concorda com 'fotos' (feminino plural). Em A, o correto é 'meio nervosa'. Em B, 'boas'. Em D, 'É proibida a entrada...'.",
+                q6: "Os verbos 'fazer' (tempo decorrido) e 'haver' (existir) são impessoais, ficam no singular.",
+                q7: "O correto é 'Vendem-se casas novas'. O sujeito é 'casas novas' (casas novas são vendidas), logo o verbo vai para o plural.",
+                q8: "'Meia' como metade (numeral) e 'meio' como um pouco (advérbio).",
+                q9: "O abaixo-assinado é um texto formal e objetivo; humor não faz parte de sua estrutura.",
+                q10: "A formalidade e o respeito são essenciais para que a solicitação seja levada a sério pela autoridade.",
+                q11: "É uma ferramenta de cidadania para que um grupo de pessoas faça um pedido formal.",
+                q12: "O vocativo é a parte que indica a quem o documento é endereçado.",
+                q13: "A função primária do texto expositivo é transmitir conhecimento de forma clara.",
+                q14: "Livros didáticos são o exemplo clássico de textos que visam explicar e ensinar.",
+                q15: "A frase está explicando o que é o conceito de fotossíntese, ou seja, definindo-o.",
+                q16: "Expor é apresentar fatos; argumentar é defender uma ideia para convencer.",
+                q17: "Na aglutinação, há perda de fonemas na junção das palavras (plano + alto = planalto).",
+                q18: "'Passatempo' une 'passa' e 'tempo' sem perdas fonéticas, caracterizando a justaposição.",
+                q19: "'Couve-flor' é nome de planta e leva hífen. O correto seria 'micro-ondas', 'antissocial', 'autoescola'.",
+                q20: "Se não dobrasse o 's', a pronúncia entre as vogais 'a' e 'o' seria de /z/ (como em 'casa')."
+            };
+
+            btnCorrigir.addEventListener('click', function (event) {
+                event.preventDefault();
+                let score = 0;
+                let todasRespondidas = true;
+
+                resetarVisual();
+
+                fieldsets.forEach((fieldset) => {
+                    const userAnswerInput = fieldset.querySelector('input[type="radio"]:checked');
+                    if (!userAnswerInput) {
+                        todasRespondidas = false;
+                        fieldset.style.borderColor = 'var(--cor-erro)';
+                    } else {
+                        fieldset.style.borderColor = 'var(--cor-borda)';
+                    }
+                });
+
+                if (!todasRespondidas) {
+                    resultadoFinalDiv.innerHTML = '<p>Por favor, responda a todas as questões antes de corrigir.</p>';
+                    resultadoFinalDiv.style.display = 'block';
+                    resultadoFinalDiv.style.backgroundColor = 'var(--cor-erro-fundo)';
+                    resultadoFinalDiv.style.borderColor = 'var(--cor-erro)';
+                    resultadoFinalDiv.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+
+                fieldsets.forEach((fieldset, index) => {
+                    const correctAnswer = fieldset.dataset.answer;
+                    const userAnswerInput = fieldset.querySelector('input[type="radio"]:checked');
+                    const userAnswer = userAnswerInput.value;
+                    const userLabel = userAnswerInput.parentElement;
+                    const feedbackDiv = fieldset.querySelector('.feedback-questao');
+                    const questaoId = `q${index + 1}`;
+
+                    const correctLabel = fieldset.querySelector(`input[value="${correctAnswer}"]`).parentElement;
+
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        userLabel.classList.add('resposta-correta');
+                        feedbackDiv.innerHTML = '<strong>Correta!</strong>';
+                        feedbackDiv.className = 'feedback-questao feedback-correto';
+                    } else {
+                        userLabel.classList.add('resposta-errada');
+                        correctLabel.classList.add('resposta-correta');
+                        feedbackDiv.innerHTML = `<strong>Incorreta.</strong> A resposta certa é a <strong>${correctAnswer}</strong>. <br><em>Por quê?</em> ${feedbacks[questaoId]}`;
+                        feedbackDiv.className = 'feedback-questao feedback-errado';
+                    }
+                    feedbackDiv.style.display = 'block';
+                });
+
+                exibirResultado(score);
+            });
+
+            btnRefazer.addEventListener('click', function () {
+                form.reset();
+                resetarVisual();
+                resultadoFinalDiv.style.display = 'none';
+                const testeSection = document.getElementById('teste-final');
+                testeSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            btnImprimir.addEventListener('click', function() {
+                window.print();
+            });
+
+            function resetarVisual() {
+                fieldsets.forEach(fieldset => {
+                    fieldset.style.borderColor = 'var(--cor-borda)';
+                    const feedbackDiv = fieldset.querySelector('.feedback-questao');
+                    if (feedbackDiv) {
+                        feedbackDiv.style.display = 'none';
+                    }
+                    fieldset.querySelectorAll('label').forEach(label => {
+                        label.classList.remove('resposta-correta', 'resposta-errada');
+                    });
+                });
+            }
+
+            function exibirResultado(score) {
+                const total = fieldsets.length;
+                const percentual = Math.round((score / total) * 100);
+                let mensagem = '';
+
+                if (percentual >= 90) {
+                    mensagem = 'Excelente! Você domina o conteúdo. Parabéns!';
+                } else if (percentual >= 70) {
+                    mensagem = 'Muito bem! Você tem um ótimo conhecimento sobre os temas.';
+                } else if (percentual >= 50) {
+                    mensagem = 'Bom resultado! Continue estudando para revisar os pontos que errou.';
+                } else {
+                    mensagem = 'Não desanime! Reveja os resumos com atenção e tente novamente. Estudar é um processo!';
+                }
+
+                resultadoFinalDiv.innerHTML = `
+                    <h3>Seu Resultado Final</h3>
+                    <p>Você acertou <strong>${score} de ${total}</strong> questões (${percentual}%).</p>
+                    <p>${mensagem}</p>
+                `;
+                resultadoFinalDiv.style.display = 'block';
+                resultadoFinalDiv.style.backgroundColor = '#e3f2fd';
+                resultadoFinalDiv.style.borderColor = 'var(--cor-primaria)';
+                resultadoFinalDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+
+</body>
+</html>
