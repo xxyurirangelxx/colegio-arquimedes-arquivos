@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Interativo de Biologia - 8º Ano</title>
+    <style>
+        :root {
+            --cor-fundo: #f4f8f7;
+            --cor-texto: #2c3e50;
+            --cor-primaria: #27ae60;
+            --cor-primaria-hover: #229954;
+            --cor-secundaria: #34495e;
+            --cor-sucesso: #28a745;
+            --cor-erro: #e74c3c;
+            --cor-aviso: #f39c12;
+            --cor-info: #3498db;
+            --cor-fundo-caixa: #ffffff;
+            --cor-borda: #ecf0f1;
+            --sombra-caixa: 0 4px 15px rgba(0,0,0,0.06);
+            --raio-borda: 12px;
+            --cor-sucesso-fundo: #d4edda;
+            --cor-erro-fundo: #f8d7da;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-hover));
+            color: white;
+            padding: 40px 20px;
+            border-radius: var(--raio-borda);
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: var(--sombra-caixa);
+        }
+
+        header h1 {
+            margin-top: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--cor-primaria);
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav a:hover, nav a:focus {
+            background-color: #fff;
+            color: var(--cor-primaria-hover);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        section {
+            background-color: var(--cor-fundo-caixa);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: var(--raio-borda);
+            box-shadow: var(--sombra-caixa);
+            border: 1px solid var(--cor-borda);
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--cor-primaria);
+            border-bottom: 3px solid var(--cor-primaria);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--cor-secundaria);
+            margin-top: 30px;
+        }
+        
+        .box {
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            border-left: 6px solid;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .box svg {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            margin-top: 3px;
+        }
+
+        .box-porque { background-color: #fef9e7; border-color: var(--cor-aviso); }
+        .box-erro { background-color: #fdedec; border-color: var(--cor-erro); }
+        .box-dica { background-color: #eafaf1; border-color: var(--cor-sucesso); }
+        .box-pratica { background-color: #eaf2f8; border-color: var(--cor-info); }
+
+        strong { color: var(--cor-primaria-hover); font-weight: 500; }
+        code {
+            background-color: #ecf0f1;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.95em;
+        }
+
+        /* Estilos do Teste Final */
+        #teste-final-form fieldset {
+            border: 1px solid var(--cor-borda);
+            border-radius: var(--raio-borda);
+            margin-bottom: 25px;
+            padding: 20px;
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+        #teste-final-form fieldset:focus-within {
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.25);
+            border-color: var(--cor-primaria);
+        }
+
+        #teste-final-form legend {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--cor-secundaria);
+            padding: 0 10px;
+        }
+
+        #teste-final-form label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid var(--cor-borda);
+        }
+
+        #teste-final-form label:hover {
+            background-color: #eafaf1;
+            border-color: var(--cor-primaria);
+        }
+        
+        #teste-final-form input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .resposta-correta {
+            background-color: var(--cor-sucesso-fundo);
+            border-color: var(--cor-sucesso) !important;
+            font-weight: 500;
+        }
+        .resposta-errada {
+            background-color: var(--cor-erro-fundo);
+            border-color: var(--cor-erro) !important;
+        }
+        
+        .feedback-questao {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .feedback-correto { background-color: var(--cor-sucesso-fundo); color: #155724; }
+        .feedback-errado { background-color: var(--cor-erro-fundo); color: #721c24; }
+
+        .botoes-teste {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-teste {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .btn-teste:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            opacity: 0.9;
+        }
+
+        .btn-teste:active {
+            transform: translateY(1px);
+        }
+
+        #btn-corrigir { background-color: var(--cor-primaria); color: white; }
+        #btn-refazer { background-color: var(--cor-secundaria); color: white; }
+        #btn-imprimir { background-color: #343a40; color: white; }
+
+        #resultado-final {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: var(--raio-borda);
+            background-color: var(--cor-fundo-caixa);
+            border: 1px solid var(--cor-borda);
+            font-size: 1.2em;
+            display: none;
+        }
+
+        @media print {
+            body { box-shadow: none; padding: 0; margin: 0; font-family: sans-serif; }
+            header, .botoes-teste, nav { display: none; }
+            .container, section { box-shadow: none; margin: 0; padding: 10px 0; max-width: 100%; border: none; }
+            .resposta-correta, .resposta-errada { border: 1px solid #ccc; }
+            .box { background-color: #eee !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Resumo Interativo de Biologia</h1>
+            <p>8º Ano | Respiração e Reprodução de forma clara e objetiva!</p>
+            <nav>
+                <ul>
+                    <li><a href="#tema1">Sistema Respiratório</a></li>
+                    <li><a href="#tema2">Processos Reprodutivos</a></li>
+                    <li><a href="#teste-final">Teste Final</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- TEMA 1: SISTEMA RESPIRATÓRIO E RESPIRAÇÃO CELULAR -->
+            <section id="tema1">
+                <h2>1. Sistema Respiratório e Respiração Celular</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Porque respirar é muito mais do que "puxar o ar". É um processo complexo que leva oxigênio para cada uma das suas células, permitindo que elas produzam a energia que mantém você vivo.</div>
+                </div>
+
+                <h3>O Caminho Detalhado do Ar</h3>
+                <p>O ar que você respira faz uma longa viagem, sendo preparado em cada etapa para chegar aos pulmões nas condições ideais.</p>
+                <ul>
+                    <li><strong>Cavidades Nasais:</strong> É a porta de entrada. O ar é <strong>filtrado</strong> pelos pelos, <strong>aquecido</strong> pelo sangue e <strong>umedecido</strong> pelo muco. Respirar pelo nariz é fundamental!</li>
+                    <li><strong>Faringe:</strong> Um canal comum aos sistemas respiratório e digestório. É a "encruzilhada" por onde passam ar e comida.</li>
+                    <li><strong>Laringe:</strong> Onde ficam as cordas vocais (pregas vocais). A <strong>epiglote</strong>, uma "portinha" de cartilagem, fecha a laringe quando engolimos para a comida não ir para o lugar errado.</li>
+                    <li><strong>Traqueia:</strong> Tubo com anéis de cartilagem que o mantêm sempre aberto. Possui cílios e muco que capturam as impurezas restantes e as "varrem" para fora.</li>
+                    <li><strong>Brônquios e Bronquíolos:</strong> A traqueia se divide em dois brônquios, um para cada pulmão. Dentro deles, se ramificam em tubos cada vez menores, os bronquíolos, formando a "árvore brônquica".</li>
+                    <li><strong>Alvéolos Pulmonares:</strong> Na ponta dos bronquíolos ficam os alvéolos, minúsculos sacos de ar (parecem um cacho de uva). É aqui que a mágica acontece: a troca de gases com o sangue.</li>
+                </ul>
+
+                <h3>A Mecânica da Respiração</h3>
+                <p>A entrada e saída de ar são controladas por músculos, principalmente o <strong>diafragma</strong> e os <strong>músculos intercostais</strong> (entre as costelas).</p>
+                <div class="box box-pratica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.48 0-4.5-2.02-4.5-4.5s2.02-4.5 4.5-4.5 4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/></svg>
+                    <div>
+                        <h4>Inspiração vs. Expiração</h4>
+                        <ul>
+                            <li><strong>Inspiração (Entrada de ar):</strong> O diafragma <strong>contrai e desce</strong>. As costelas sobem. A caixa torácica aumenta de volume, a pressão interna diminui e o ar entra. <strong>É um processo ativo, gasta energia.</strong></li>
+                            <li><strong>Expiração (Saída de ar):</strong> O diafragma <strong>relaxa e sobe</strong>. As costelas descem. A caixa torácica diminui de volume, a pressão interna aumenta e o ar sai. <strong>É um processo passivo, não gasta energia.</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Definições-Chave: Hematose e Respiração Celular</h3>
+                <ul>
+                    <li><strong>Hematose (Troca Gasosa):</strong> Ocorre nos alvéolos. O oxigênio (O₂) do ar passa para o sangue e o gás carbônico (CO₂) do sangue passa para o ar, para ser eliminado. Essa troca acontece por <strong>difusão</strong> (o gás vai de onde está mais concentrado para onde está menos concentrado).</li>
+                    <li><strong>Respiração Celular:</strong> É o objetivo final de tudo. Acontece dentro das <strong>mitocôndrias</strong> de cada célula. A célula usa a <strong>glicose</strong> (dos alimentos) e o <strong>oxigênio</strong> (da respiração) para produzir <strong>energia (ATP)</strong>, liberando gás carbônico e água como resíduos.</li>
+                </ul>
+                <p style="text-align:center; font-weight: 500;"><code>C₆H₁₂O₆ (Glicose) + O₂ → CO₂ + H₂O + Energia (ATP)</code></p>
+                
+                <div class="box box-erro">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 13.5L7 12l1.5-1.5L10.5 12l4.5-4.5L16.5 9l-6 6z" transform="rotate(45 12 12)"/></svg>
+                    <div>
+                        <h4>Erro Comum: Confundir os Termos</h4>
+                        <p><strong>Erro:</strong> Achar que "respiração" é só o ato de encher e esvaziar os pulmões. <br>
+                        <strong>Como evitar:</strong> Lembre-se que são duas etapas. A <strong>respiração pulmonar</strong> (inspiração/expiração) é a parte mecânica. A <strong>respiração celular</strong> é a parte química, que realmente gera a energia que te mantém vivo.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEMA 2: PROCESSOS REPRODUTIVOS -->
+            <section id="tema2">
+                <h2>2. Processos Reprodutivos</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Para entender como a vida se perpetua. Os diferentes tipos de reprodução explicam a incrível diversidade de seres vivos no planeta e como eles se adaptam e sobrevivem ao longo do tempo.</div>
+                </div>
+
+                <h3>Reprodução Assexuada: "Copiar e Colar"</h3>
+                <p>Envolve apenas <strong>um progenitor</strong>. Os descendentes são <strong>geneticamente idênticos</strong> a ele (clones).</p>
+                <ul>
+                    <li><strong>Vantagens:</strong> Processo rápido, não precisa encontrar parceiro, gera muitos descendentes em pouco tempo.</li>
+                    <li><strong>Desvantagens:</strong> <strong>Não gera variabilidade genética</strong>. Se uma doença atinge o progenitor, atinge todos os descendentes da mesma forma.</li>
+                    <li><strong>Tipos Comuns:</strong> Divisão Binária (bactérias), Brotamento (hidras), Fragmentação (estrelas-do-mar).</li>
+                </ul>
+
+                <h3>Reprodução Sexuada: "Misturar e Criar"</h3>
+                <p>Envolve a fusão de <strong>dois gametas</strong> (células reprodutivas, como espermatozoide e óvulo), geralmente de dois progenitores diferentes.</p>
+                <ul>
+                    <li><strong>Vantagem Principal:</strong> <strong>Gera variabilidade genética</strong>. A mistura de genes dos pais cria descendentes únicos, aumentando as chances da espécie se adaptar a mudanças no ambiente. É a matéria-prima da evolução.</li>
+                    <li><strong>Desvantagens:</strong> Processo mais lento, gasta mais energia e exige o encontro de parceiros.</li>
+                </ul>
+
+                <div class="box box-dica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.01 16c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm1.5-4h-3c-.28 0-.5-.22-.5-.5v-5c0-.28.22-.5.5-.5h3c.28 0 .5.22.5.5v5c0 .28-.22.5-.5.5z"/></svg>
+                    <div>
+                        <h4>Dica de Prova: A Grande Vantagem</h4>
+                        <p>Se uma questão perguntar qual a principal vantagem evolutiva da reprodução sexuada, a resposta é sempre <strong>variabilidade genética</strong>. Essa diversidade é o que permite que as espécies sobrevivam a longo prazo.</p>
+                    </div>
+                </div>
+
+                <h3>Caso Especial: Os Vírus</h3>
+                <p>Vírus são um capítulo à parte. Eles <strong>não são considerados seres vivos</strong> por muitos cientistas porque são <strong>acelulares</strong> (não têm células) e não possuem metabolismo próprio.</p>
+                <ul>
+                    <li><strong>Estrutura:</strong> Basicamente, material genético (DNA ou RNA) dentro de uma cápsula de proteína (capsídeo).</li>
+                    <li><strong>Reprodução:</strong> São <strong>parasitas intracelulares obrigatórios</strong>. Eles precisam invadir uma célula viva e "sequestrar" a maquinaria dela para produzir cópias de si mesmos.</li>
+                </ul>
+
+                <div class="box box-erro">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 13.5L7 12l1.5-1.5L10.5 12l4.5-4.5L16.5 9l-6 6z" transform="rotate(45 12 12)"/></svg>
+                    <div>
+                        <h4>Erro Comum: Vírus vs. Bactéria</h4>
+                        <p><strong>Erro:</strong> Achar que vírus e bactérias são a mesma coisa e que antibióticos matam vírus. <br>
+                        <strong>Como evitar:</strong> Lembre-se: bactérias são seres vivos (células) e podem ser combatidas com antibióticos. Vírus são parasitas acelulares e não são afetados por antibióticos. Doenças virais (como gripe e COVID-19) são combatidas com vacinas e antivirais.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TESTE FINAL -->
+            <section id="teste-final">
+                <h2>Teste Final - Pratique o que você aprendeu!</h2>
+                <p>Responda às 20 questões abaixo. Ao final, clique em "Corrigir" para ver seu resultado.</p>
+                
+                <form id="teste-final-form">
+                    <!-- Questões sobre Sistema Respiratório -->
+                    <fieldset data-answer="D">
+                        <legend>Questão 1</legend>
+                        <p>Qual é a função principal das cavidades nasais no processo respiratório?</p>
+                        <label><input type="radio" name="q1" value="A"> Produzir a voz.</label>
+                        <label><input type="radio" name="q1" value="B"> Realizar a troca de gases com o sangue.</label>
+                        <label><input type="radio" name="q1" value="C"> Conectar a faringe à traqueia.</label>
+                        <label><input type="radio" name="q1" value="D"> Filtrar, aquecer e umedecer o ar inspirado.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 2</legend>
+                        <p>A estrutura que impede a entrada de alimentos nas vias respiratórias durante a deglutição é a:</p>
+                        <label><input type="radio" name="q2" value="A"> Epiglote.</label>
+                        <label><input type="radio" name="q2" value="B"> Faringe.</label>
+                        <label><input type="radio" name="q2" value="C"> Traqueia.</label>
+                        <label><input type="radio" name="q2" value="D"> Diafragma.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 3</legend>
+                        <p>O processo de troca de gases (oxigênio e gás carbônico) entre o ar e o sangue ocorre nos:</p>
+                        <label><input type="radio" name="q3" value="A"> Brônquios.</label>
+                        <label><input type="radio" name="q3" value="B"> Bronquíolos.</label>
+                        <label><input type="radio" name="q3" value="C"> Alvéolos pulmonares.</label>
+                        <label><input type="radio" name="q3" value="D"> Músculos intercostais.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="B">
+                        <legend>Questão 4</legend>
+                        <p>Durante a inspiração, o que acontece com o diafragma e o volume da caixa torácica?</p>
+                        <label><input type="radio" name="q4" value="A"> O diafragma relaxa e sobe; o volume diminui.</label>
+                        <label><input type="radio" name="q4" value="B"> O diafragma contrai e desce; o volume aumenta.</label>
+                        <label><input type="radio" name="q4" value="C"> O diafragma contrai e desce; o volume diminui.</label>
+                        <label><input type="radio" name="q4" value="D"> O diafragma relaxa e sobe; o volume aumenta.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="D">
+                        <legend>Questão 5</legend>
+                        <p>A expiração é considerada um processo passivo porque ocorre principalmente pelo:</p>
+                        <label><input type="radio" name="q5" value="A"> Gasto de energia para contrair os músculos.</label>
+                        <label><input type="radio" name="q5" value="B"> Aumento da pressão atmosférica.</label>
+                        <label><input type="radio" name="q5" value="C"> Contração forte do diafragma.</label>
+                        <label><input type="radio" name="q5" value="D"> Relaxamento dos músculos respiratórios.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 6</legend>
+                        <p>O nome do processo de troca gasosa que ocorre nos alvéolos é:</p>
+                        <label><input type="radio" name="q6" value="A"> Hematose.</label>
+                        <label><input type="radio" name="q6" value="B"> Respiração celular.</label>
+                        <label><input type="radio" name="q6" value="C"> Fonação.</label>
+                        <label><input type="radio" name="q6" value="D"> Inspiração.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="C">
+                        <legend>Questão 7</legend>
+                        <p>A respiração celular ocorre dentro de qual organela da célula?</p>
+                        <label><input type="radio" name="q7" value="A"> Núcleo.</label>
+                        <label><input type="radio" name="q7" value="B"> Ribossomo.</label>
+                        <label><input type="radio" name="q7" value="C"> Mitocôndria.</label>
+                        <label><input type="radio" name="q7" value="D"> Membrana plasmática.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="B">
+                        <legend>Questão 8</legend>
+                        <p>Quais são os "ingredientes" necessários para a respiração celular?</p>
+                        <label><input type="radio" name="q8" value="A"> Gás carbônico e água.</label>
+                        <label><input type="radio" name="q8" value="B"> Glicose e oxigênio.</label>
+                        <label><input type="radio" name="q8" value="C"> Energia (ATP) e oxigênio.</label>
+                        <label><input type="radio" name="q8" value="D"> Glicose e gás carbônico.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="A">
+                        <legend>Questão 9</legend>
+                        <p>O principal produto da respiração celular, que fornece energia para as atividades do corpo, é o(a):</p>
+                        <label><input type="radio" name="q9" value="A"> ATP.</label>
+                        <label><input type="radio" name="q9" value="B"> Gás carbônico.</label>
+                        <label><input type="radio" name="q9" value="C"> Água.</label>
+                        <label><input type="radio" name="q9" value="D"> Glicose.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="D">
+                        <legend>Questão 10</legend>
+                        <p>Os cílios e o muco presentes na traqueia têm a função de:</p>
+                        <label><input type="radio" name="q10" value="A"> Aquecer o ar.</label>
+                        <label><input type="radio" name="q10" value="B"> Realizar a hematose.</label>
+                        <label><input type="radio" name="q10" value="C"> Produzir sons.</label>
+                        <label><input type="radio" name="q10" value="D"> Limpar o ar, removendo impurezas.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <!-- Questões sobre Processos Reprodutivos -->
+                    <fieldset data-answer="C">
+                        <legend>Questão 11</legend>
+                        <p>Qual é a principal característica da reprodução assexuada?</p>
+                        <label><input type="radio" name="q11" value="A"> Envolve a fusão de gametas.</label>
+                        <label><input type="radio" name="q11" value="B"> Gera alta variabilidade genética.</label>
+                        <label><input type="radio" name="q11" value="C"> Envolve apenas um progenitor e gera clones.</label>
+                        <label><input type="radio" name="q11" value="D"> É um processo lento e com grande gasto de energia.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="B">
+                        <legend>Questão 12</legend>
+                        <p>A principal vantagem evolutiva da reprodução sexuada é:</p>
+                        <label><input type="radio" name="q12" value="A"> Ser um processo mais rápido.</label>
+                        <label><input type="radio" name="q12" value="B"> A geração de variabilidade genética.</label>
+                        <label><input type="radio" name="q12" value="C"> Não precisar encontrar um parceiro.</label>
+                        <label><input type="radio" name="q12" value="D"> Produzir um número maior de descendentes.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 13</legend>
+                        <p>Uma bactéria que se divide ao meio para gerar duas novas bactérias está realizando um processo de:</p>
+                        <label><input type="radio" name="q13" value="A"> Divisão binária.</label>
+                        <label><input type="radio" name="q13" value="B"> Brotamento.</label>
+                        <label><input type="radio" name="q13" value="C"> Fragmentação.</label>
+                        <label><input type="radio" name="q13" value="D"> Fecundação.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="D">
+                        <legend>Questão 14</legend>
+                        <p>Os vírus são considerados parasitas intracelulares obrigatórios porque:</p>
+                        <label><input type="radio" name="q14" value="A"> Possuem células muito simples.</label>
+                        <label><input type="radio" name="q14" value="B"> Realizam respiração celular.</label>
+                        <label><input type="radio" name="q14" value="C"> São combatidos por antibióticos.</label>
+                        <label><input type="radio" name="q14" value="D"> Não possuem metabolismo próprio e precisam de uma célula hospedeira para se replicar.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 15</legend>
+                        <p>Qual é a principal desvantagem da reprodução assexuada?</p>
+                        <label><input type="radio" name="q15" value="A"> A falta de variabilidade genética na descendência.</label>
+                        <label><input type="radio" name="q15" value="B"> A necessidade de encontrar um parceiro.</label>
+                        <label><input type="radio" name="q15" value="C"> O alto gasto de energia no processo.</label>
+                        <label><input type="radio" name="q15" value="D"> A lentidão para gerar descendentes.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 16</legend>
+                        <p>A estrutura básica de um vírus é composta por:</p>
+                        <label><input type="radio" name="q16" value="A"> Membrana, citoplasma e núcleo.</label>
+                        <label><input type="radio" name="q16" value="B"> Mitocôndrias e ribossomos.</label>
+                        <label><input type="radio" name="q16" value="C"> Material genético (DNA ou RNA) e uma cápsula de proteína.</label>
+                        <label><input type="radio" name="q16" value="D"> Parede celular e flagelos.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="B">
+                        <legend>Questão 17</legend>
+                        <p>As células reprodutivas que se unem na fecundação são chamadas de:</p>
+                        <label><input type="radio" name="q17" value="A"> Zigotos.</label>
+                        <label><input type="radio" name="q17" value="B"> Gametas.</label>
+                        <label><input type="radio" name="q17" value="C"> Clones.</label>
+                        <label><input type="radio" name="q17" value="D"> Gêmulas.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 18</legend>
+                        <p>Uma estrela-do-mar que perde um braço e consegue regenerar o corpo inteiro a partir desse fragmento é um exemplo de:</p>
+                        <label><input type="radio" name="q18" value="A"> Brotamento.</label>
+                        <label><input type="radio" name="q18" value="B"> Gemulação.</label>
+                        <label><input type="radio" name="q18" value="C"> Divisão binária.</label>
+                        <label><input type="radio" name="q18" value="D"> Fragmentação.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="A">
+                        <legend>Questão 19</legend>
+                        <p>Por que os descendentes da reprodução sexuada são geneticamente diferentes dos pais?</p>
+                        <label><input type="radio" name="q19" value="A"> Porque eles herdam uma combinação única de genes de dois progenitores.</label>
+                        <label><input type="radio" name="q19" value="B"> Porque eles são clones exatos de um dos progenitores.</label>
+                        <label><input type="radio" name="q19" value="C"> Porque ocorrem muitas mutações durante a fecundação.</label>
+                        <label><input type="radio" name="q19" value="D"> Porque eles se desenvolvem em ambientes diferentes.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 20</legend>
+                        <p>Qual afirmação sobre vírus e bactérias está correta?</p>
+                        <label><input type="radio" name="q20" value="A"> Ambos são seres unicelulares.</label>
+                        <label><input type="radio" name="q20" value="B"> Antibióticos são eficazes contra ambos.</label>
+                        <label><input type="radio" name="q20" value="C"> Bactérias são células vivas, enquanto vírus são acelulares.</label>
+                        <label><input type="radio" name="q20" value="D"> Ambos se reproduzem exclusivamente de forma sexuada.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    <div class="botoes-teste">
+                        <button type="submit" id="btn-corrigir" class="btn-teste">Corrigir</button>
+                        <button type="button" id="btn-refazer" class="btn-teste">Refazer</button>
+                        <button type="button" id="btn-imprimir" class="btn-teste">Imprimir / Salvar PDF</button>
+                    </div>
+                </form>
+
+                <div id="resultado-final" role="alert" aria-live="assertive"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('teste-final-form');
+            const btnCorrigir = document.getElementById('btn-corrigir');
+            const btnRefazer = document.getElementById('btn-refazer');
+            const btnImprimir = document.getElementById('btn-imprimir');
+            const resultadoFinalDiv = document.getElementById('resultado-final');
+            const fieldsets = form.querySelectorAll('fieldset');
+
+            const feedbacks = {
+                q1: "As cavidades nasais são a primeira linha de defesa, preparando o ar para os pulmões.",
+                q2: "A epiglote funciona como uma válvula, protegendo as vias aéreas durante a alimentação.",
+                q3: "É nos alvéolos, com suas paredes finas e grande área de superfície, que ocorre a hematose.",
+                q4: "A contração do diafragma e dos intercostais expande a caixa torácica, forçando a entrada de ar.",
+                q5: "A expiração normal não exige contração muscular, apenas o relaxamento dos músculos que atuaram na inspiração.",
+                q6: "Hematose é o nome específico para a troca de gases que ocorre entre os alvéolos e o sangue.",
+                q7: "As mitocôndrias são as 'usinas de energia' das células, onde a respiração celular acontece.",
+                q8: "A célula 'queima' glicose (combustível) na presença de oxigênio (comburente) para liberar energia.",
+                q9: "ATP (Adenosina Trifosfato) é a molécula que armazena e transporta a energia liberada na respiração celular.",
+                q10: "O sistema mucociliar da traqueia é um mecanismo de limpeza essencial para proteger os pulmões.",
+                q11: "A reprodução assexuada gera descendentes idênticos (clones) a partir de um único pai/mãe.",
+                q12: "A mistura de genes de dois indivíduos cria descendentes únicos, o que é fundamental para a adaptação e evolução das espécies.",
+                q13: "Divisão binária ou cissiparidade é o processo de reprodução assexuada típico das bactérias.",
+                q14: "Vírus não têm as 'ferramentas' para se replicar, por isso precisam usar as de uma célula viva.",
+                q15: "Sem variabilidade, uma população inteira pode ser dizimada por uma única doença ou mudança ambiental.",
+                q16: "A estrutura viral é minimalista: um 'pacote' de material genético protegido por proteínas.",
+                q17: "Gametas são as células especializadas (espermatozoide e óvulo nos animais) para a reprodução sexuada.",
+                q18: "A capacidade de regenerar um organismo completo a partir de um pedaço é chamada de fragmentação.",
+                q19: "A meiose e a fecundação garantem que cada descendente tenha uma combinação genética exclusiva.",
+                q20: "Essa é uma diferença fundamental: bactérias são seres vivos celulares, vírus não."
+            };
+
+            btnCorrigir.addEventListener('click', function (event) {
+                event.preventDefault();
+                let score = 0;
+                let todasRespondidas = true;
+
+                resetarVisual();
+
+                fieldsets.forEach((fieldset) => {
+                    const userAnswerInput = fieldset.querySelector('input[type="radio"]:checked');
+                    if (!userAnswerInput) {
+                        todasRespondidas = false;
+                        fieldset.style.borderColor = 'var(--cor-erro)';
+                    } else {
+                        fieldset.style.borderColor = 'var(--cor-borda)';
+                    }
+                });
+
+                if (!todasRespondidas) {
+                    resultadoFinalDiv.innerHTML = '<p>Por favor, responda a todas as questões antes de corrigir.</p>';
+                    resultadoFinalDiv.style.display = 'block';
+                    resultadoFinalDiv.style.backgroundColor = 'var(--cor-erro-fundo)';
+                    resultadoFinalDiv.style.borderColor = 'var(--cor-erro)';
+                    resultadoFinalDiv.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+
+                fieldsets.forEach((fieldset, index) => {
+                    const correctAnswer = fieldset.dataset.answer;
+                    const userAnswerInput = fieldset.querySelector('input[type="radio"]:checked');
+                    const userAnswer = userAnswerInput.value;
+                    const userLabel = userAnswerInput.parentElement;
+                    const feedbackDiv = fieldset.querySelector('.feedback-questao');
+                    const questaoId = `q${index + 1}`;
+
+                    const correctLabel = fieldset.querySelector(`input[value="${correctAnswer}"]`).parentElement;
+
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        userLabel.classList.add('resposta-correta');
+                        feedbackDiv.innerHTML = '<strong>Correta!</strong>';
+                        feedbackDiv.className = 'feedback-questao feedback-correto';
+                    } else {
+                        userLabel.classList.add('resposta-errada');
+                        correctLabel.classList.add('resposta-correta');
+                        feedbackDiv.innerHTML = `<strong>Incorreta.</strong> A resposta certa é a <strong>${correctAnswer}</strong>. <br><em>Por quê?</em> ${feedbacks[questaoId]}`;
+                        feedbackDiv.className = 'feedback-questao feedback-errado';
+                    }
+                    feedbackDiv.style.display = 'block';
+                });
+
+                exibirResultado(score);
+            });
+
+            btnRefazer.addEventListener('click', function () {
+                form.reset();
+                resetarVisual();
+                resultadoFinalDiv.style.display = 'none';
+                const testeSection = document.getElementById('teste-final');
+                testeSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            btnImprimir.addEventListener('click', function() {
+                window.print();
+            });
+
+            function resetarVisual() {
+                fieldsets.forEach(fieldset => {
+                    fieldset.style.borderColor = 'var(--cor-borda)';
+                    const feedbackDiv = fieldset.querySelector('.feedback-questao');
+                    if (feedbackDiv) {
+                        feedbackDiv.style.display = 'none';
+                    }
+                    fieldset.querySelectorAll('label').forEach(label => {
+                        label.classList.remove('resposta-correta', 'resposta-errada');
+                    });
+                });
+            }
+
+            function exibirResultado(score) {
+                const total = fieldsets.length;
+                const percentual = Math.round((score / total) * 100);
+                let mensagem = '';
+
+                if (percentual >= 90) {
+                    mensagem = 'Excelente! Você domina o conteúdo. Parabéns!';
+                } else if (percentual >= 70) {
+                    mensagem = 'Muito bem! Você tem um ótimo conhecimento sobre os temas.';
+                } else if (percentual >= 50) {
+                    mensagem = 'Bom resultado! Continue estudando para revisar os pontos que errou.';
+                } else {
+                    mensagem = 'Não desanime! Reveja os resumos com atenção e tente novamente. Estudar é um processo!';
+                }
+
+                resultadoFinalDiv.innerHTML = `
+                    <h3>Seu Resultado Final</h3>
+                    <p>Você acertou <strong>${score} de ${total}</strong> questões (${percentual}%).</p>
+                    <p>${mensagem}</p>
+                `;
+                resultadoFinalDiv.style.display = 'block';
+                resultadoFinalDiv.style.backgroundColor = '#eaf2f8';
+                resultadoFinalDiv.style.borderColor = 'var(--cor-info)';
+                resultadoFinalDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+
+</body>
+</html>
