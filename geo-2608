@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Interativo de Geografia - 8º Ano</title>
+    <style>
+        :root {
+            --cor-fundo: #fdfefe;
+            --cor-texto: #34495e;
+            --cor-primaria: #3498db;
+            --cor-primaria-hover: #2980b9;
+            --cor-secundaria: #95a5a6;
+            --cor-sucesso: #2ecc71;
+            --cor-erro: #e74c3c;
+            --cor-aviso: #f1c40f;
+            --cor-info: #1abc9c;
+            --cor-fundo-caixa: #ffffff;
+            --cor-borda: #ecf0f1;
+            --sombra-caixa: 0 5px 15px rgba(0,0,0,0.07);
+            --raio-borda: 12px;
+            --cor-sucesso-fundo: #eafaf1;
+            --cor-erro-fundo: #fdedec;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-hover));
+            color: white;
+            padding: 40px 20px;
+            border-radius: var(--raio-borda);
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: var(--sombra-caixa);
+        }
+
+        header h1 {
+            margin-top: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--cor-primaria);
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav a:hover, nav a:focus {
+            background-color: #fff;
+            color: var(--cor-primaria-hover);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        section {
+            background-color: var(--cor-fundo-caixa);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: var(--raio-borda);
+            box-shadow: var(--sombra-caixa);
+            border: 1px solid var(--cor-borda);
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--cor-primaria);
+            border-bottom: 3px solid var(--cor-primaria);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-top: 30px;
+        }
+        
+        .box {
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            border-left: 6px solid;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .box svg {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            margin-top: 3px;
+        }
+
+        .box-porque { background-color: #fef9e7; border-color: var(--cor-aviso); }
+        .box-erro { background-color: #fdedec; border-color: var(--cor-erro); }
+        .box-dica { background-color: #eafaf1; border-color: var(--cor-sucesso); }
+        .box-pratica { background-color: #eaf2f8; border-color: var(--cor-info); }
+
+        strong { color: var(--cor-primaria-hover); font-weight: 500; }
+        code {
+            background-color: #ecf0f1;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.95em;
+        }
+
+        /* Estilos do Teste Final */
+        #teste-final-form fieldset {
+            border: 1px solid var(--cor-borda);
+            border-radius: var(--raio-borda);
+            margin-bottom: 25px;
+            padding: 20px;
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+        #teste-final-form fieldset:focus-within {
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+            border-color: var(--cor-primaria);
+        }
+
+        #teste-final-form legend {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--cor-secundaria);
+            padding: 0 10px;
+        }
+
+        #teste-final-form label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid var(--cor-borda);
+        }
+
+        #teste-final-form label:hover {
+            background-color: #eaf2f8;
+            border-color: var(--cor-primaria);
+        }
+        
+        #teste-final-form input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .resposta-correta {
+            background-color: var(--cor-sucesso-fundo);
+            border-color: var(--cor-sucesso) !important;
+            font-weight: 500;
+        }
+        .resposta-errada {
+            background-color: var(--cor-erro-fundo);
+            border-color: var(--cor-erro) !important;
+        }
+        
+        .feedback-questao {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .feedback-correto { background-color: var(--cor-sucesso-fundo); color: #155724; }
+        .feedback-errado { background-color: var(--cor-erro-fundo); color: #721c24; }
+
+        .botoes-teste {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-teste {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .btn-teste:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            opacity: 0.9;
+        }
+
+        .btn-teste:active {
+            transform: translateY(1px);
+        }
+
+        #btn-corrigir { background-color: var(--cor-primaria); color: white; }
+        #btn-refazer { background-color: var(--cor-secundaria); color: white; }
+        #btn-imprimir { background-color: #34495e; color: white; }
+
+        #resultado-final {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: var(--raio-borda);
+            background-color: var(--cor-fundo-caixa);
+            border: 1px solid var(--cor-borda);
+            font-size: 1.2em;
+            display: none;
+        }
+
+        @media print {
+            body { box-shadow: none; padding: 0; margin: 0; font-family: sans-serif; }
+            header, .botoes-teste, nav { display: none; }
+            .container, section { box-shadow: none; margin: 0; padding: 10px 0; max-width: 100%; border: none; }
+            .resposta-correta, .resposta-errada { border: 1px solid #ccc; }
+            .box { background-color: #eee !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Revisão Interativa de Geografia</h1>
+            <p>8º Ano | Canadá e América Latina: Colonização, Economia e Desafios</p>
+            <nav>
+                <ul>
+                    <li><a href="#tema1">Canadá</a></li>
+                    <li><a href="#tema2">América Latina</a></li>
+                    <li><a href="#teste-final">Teste Final</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- TEMA 1: CANADÁ -->
+            <section id="tema1">
+                <h2>1. Canadá: Colonização, Recursos e Economia</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Para entender como a história e os recursos naturais de um país definem quem ele é hoje. O caso do Canadá mostra como a colonização e a geografia moldaram sua cultura, economia e sua relação com o mundo.</div>
+                </div>
+
+                <h3>Colonização e Cultura: A Herança Franco-Britânica</h3>
+                <p>A história do Canadá é marcada pela disputa entre França e Reino Unido. Essa herança é visível em todo o país:</p>
+                <ul>
+                    <li><strong>Bilinguismo:</strong> O Canadá tem dois idiomas oficiais, <strong>inglês e francês</strong>, um reflexo direto de seus dois principais colonizadores.</li>
+                    <li><strong>Sistema Político:</strong> É uma <strong>Monarquia Parlamentarista</strong>. Isso significa que, embora seja um país independente, ainda reconhece o monarca britânico como chefe de Estado (um papel simbólico), mas o poder real é exercido pelo <strong>Primeiro-Ministro</strong>.</li>
+                </ul>
+
+                <h3>Economia e Ocupação do Território</h3>
+                <p>O Canadá é um gigante em território, mas com uma população pequena (cerca de 38 milhões) e muito concentrada.</p>
+                <ul>
+                    <li><strong>Distribuição da População:</strong> A grande maioria dos canadenses vive em uma estreita faixa no <strong>sul do país</strong>, perto da fronteira com os EUA. O motivo é simples: escapar do clima polar extremo do norte.</li>
+                    <li><strong>Economia Baseada em Recursos:</strong> A economia canadense foi construída sobre sua imensa riqueza natural.
+                        <ul>
+                            <li><strong>Setor Secundário (Indústria):</strong> As florestas sustentam a indústria <strong>madeireira e de papel</strong>. Os ricos depósitos minerais alimentam a <strong>siderurgia e a metalurgia</strong>.</li>
+                            <li><strong>Setor Terciário (Comércio):</strong> Grande parte da produção é voltada para a <strong>exportação</strong>.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Imigração:</strong> O país é conhecido por receber imigrantes de todo o mundo, o que o torna uma sociedade multicultural e diversa.</li>
+                </ul>
+                
+                <div class="box box-pratica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.48 0-4.5-2.02-4.5-4.5s2.02-4.5 4.5-4.5 4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/></svg>
+                    <div>
+                        <h4>Relações com os EUA: Uma Parceria Dependente</h4>
+                        <p>A relação com os Estados Unidos é o motor da economia canadense, formalizada pelo bloco <strong>USMCA</strong> (antigo NAFTA).</p>
+                        <ul>
+                            <li><strong>Troca Desigual:</strong> O Canadá exporta principalmente <strong>matérias-primas</strong> (madeira, petróleo, minérios) para os EUA. Em troca, importa <strong>produtos industrializados</strong> (máquinas, eletrônicos) dos EUA.</li>
+                            <li><strong>Vantagem:</strong> Gera muita riqueza e empregos para o Canadá.</li>
+                            <li><strong>Desafio:</strong> Essa <strong>dependência</strong> deixa o Canadá vulnerável. Se os EUA decidem taxar produtos canadenses (como no "tarifaço" de Trump), a economia do Canadá sofre diretamente.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEMA 2: AMÉRICA LATINA -->
+            <section id="tema2">
+                <h2>2. América Latina: Herança Colonial e Desafios Atuais</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Para entender que os problemas sociais e econômicos de hoje, como a desigualdade, têm raízes profundas na nossa história de colonização e exploração. Analisar a população nos ajuda a ver os desafios do presente e do futuro.</div>
+                </div>
+
+                <h3>A Herança da Colonização</h3>
+                <p>A ocupação europeia (principalmente por Espanha e Portugal) deixou marcas que duram até hoje.</p>
+                <ul>
+                    <li><strong>Dizimação Nativa:</strong> A chegada dos europeus trouxe doenças (gripe, varíola) contra as quais os povos nativos não tinham imunidade, causando uma mortalidade em massa.</li>
+                    <li><strong>Tráfico de Escravizados:</strong> Para sustentar a produção de cana-de-açúcar e a mineração, milhões de africanos foram trazidos à força para o continente através do <strong>comércio triangular</strong>, um sistema cruel de exploração.</li>
+                </ul>
+
+                <h3>Analisando a População: Pirâmides Etárias</h3>
+                <p>A pirâmide etária é um gráfico que mostra a distribuição da população por idade e sexo. Seu formato revela muito sobre os desafios de um país.</p>
+                
+                <div class="box box-pratica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 10.5c-2.48 0-4.5-2.02-4.5-4.5s2.02-4.5 4.5-4.5 4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/></svg>
+                    <div>
+                        <h4>Haiti vs. Chile: Dois Desafios Diferentes</h4>
+                        <ul>
+                            <li><strong>Haiti (Base Larga, Topo Estreito):</strong> Muitas crianças e jovens, poucos idosos. Isso indica <strong>alta natalidade</strong> e <strong>baixa expectativa de vida</strong>. O desafio é investir em <strong>educação e saúde básica</strong>.</li>
+                            <li><strong>Chile (Base Estreita, Topo Largo):</strong> Poucos jovens, muitos adultos e idosos. Isso indica <strong>baixa natalidade</strong> e <strong>alta expectativa de vida</strong>. O desafio é gerar empregos e sustentar a <strong>previdência (aposentadorias) e a saúde para os idosos</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>A Desigualdade como Herança: Índice de Gini</h3>
+                <p>O <strong>Índice de Gini</strong> é um número de 0 a 1 que mede a desigualdade de renda. Quanto mais perto de 1, mais a riqueza está concentrada nas mãos de poucas pessoas.</p>
+                
+                <div class="box box-erro">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 13.5L7 12l1.5-1.5L10.5 12l4.5-4.5L16.5 9l-6 6z" transform="rotate(45 12 12)"/></svg>
+                    <div>
+                        <h4>Entendendo o Gini</h4>
+                        <p>A América Latina tem um dos maiores Índices de Gini do mundo. Isso não é por acaso. É uma consequência direta da história de exploração colonial, onde a terra e os recursos foram distribuídos para uma pequena elite, criando uma estrutura de <strong>concentração de renda</strong> que persiste até hoje.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TESTE FINAL -->
+            <section id="teste-final">
+                <h2>Teste Final - Pratique o que você aprendeu!</h2>
+                <p>Responda às 20 questões abaixo. Ao final, clique em "Corrigir" para ver seu resultado.</p>
+                
+                <form id="teste-final-form">
+                    <!-- Questões sobre Canadá -->
+                    <fieldset data-answer="B">
+                        <legend>Questão 1</legend>
+                        <p>A presença do inglês e do francês como idiomas oficiais no Canadá é um reflexo direto de sua colonização por:</p>
+                        <label><input type="radio" name="q1" value="A"> Espanha e Portugal.</label>
+                        <label><input type="radio" name="q1" value="B"> Reino Unido e França.</label>
+                        <label><input type="radio" name="q1" value="C"> Holanda e Reino Unido.</label>
+                        <label><input type="radio" name="q1" value="D"> França e Espanha.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 2</legend>
+                        <p>Qual é o sistema político do Canadá?</p>
+                        <label><input type="radio" name="q2" value="A"> República Presidencialista.</label>
+                        <label><input type="radio" name="q2" value="B"> Monarquia Absolutista.</label>
+                        <label><input type="radio" name="q2" value="C"> Monarquia Parlamentarista.</label>
+                        <label><input type="radio" name="q2" value="D"> República Parlamentarista.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 3</legend>
+                        <p>A maior parte da população canadense se concentra na porção sul do país devido:</p>
+                        <label><input type="radio" name="q3" value="A"> Ao clima mais ameno, evitando o frio extremo do norte.</label>
+                        <label><input type="radio" name="q3" value="B"> À maior quantidade de recursos minerais no sul.</label>
+                        <label><input type="radio" name="q3" value="C"> À herança da colonização francesa, que começou no sul.</label>
+                        <label><input type="radio" name="q3" value="D"> Às leis que proíbem a ocupação do norte.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 4</legend>
+                        <p>A economia do Canadá é fortemente baseada na:</p>
+                        <label><input type="radio" name="q4" value="A"> Produção de tecnologia de ponta.</label>
+                        <label><input type="radio" name="q4" value="B"> Indústria do turismo.</label>
+                        <label><input type="radio" name="q4" value="C"> Agricultura tropical.</label>
+                        <label><input type="radio" name="q4" value="D"> Exploração e exportação de recursos naturais.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="B">
+                        <legend>Questão 5</legend>
+                        <p>O bloco econômico que formaliza a relação de livre comércio entre Canadá, EUA e México é o:</p>
+                        <label><input type="radio" name="q5" value="A"> Mercosul.</label>
+                        <label><input type="radio" name="q5" value="B"> USMCA.</label>
+                        <label><input type="radio" name="q5" value="C"> União Europeia.</label>
+                        <label><input type="radio" name="q5" value="D"> APEC.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 6</legend>
+                        <p>Na relação comercial com os EUA, o Canadá se destaca por exportar principalmente:</p>
+                        <label><input type="radio" name="q6" value="A"> Produtos industrializados e tecnologia.</label>
+                        <label><input type="radio" name="q6" value="B"> Serviços financeiros e de turismo.</label>
+                        <label><input type="radio" name="q6" value="C"> Matérias-primas e recursos naturais.</label>
+                        <label><input type="radio" name="q6" value="D"> Produtos agrícolas tropicais.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="A">
+                        <legend>Questão 7</legend>
+                        <p>Qual é o principal desafio da forte dependência econômica do Canadá em relação aos EUA?</p>
+                        <label><input type="radio" name="q7" value="A"> A vulnerabilidade a mudanças na política comercial dos EUA.</label>
+                        <label><input type="radio" name="q7" value="B"> A dificuldade de transportar produtos pela fronteira.</label>
+                        <label><input type="radio" name="q7" value="C"> A diferença de fuso horário entre os dois países.</label>
+                        <label><input type="radio" name="q7" value="D"> A concorrência com a indústria mexicana.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 8</legend>
+                        <p>As indústrias de papel e celulose e a siderurgia no Canadá são fortes devido, respectivamente, à abundância de:</p>
+                        <label><input type="radio" name="q8" value="A"> Mão de obra barata e rios navegáveis.</label>
+                        <label><input type="radio" name="q8" value="B"> Petróleo e gás natural.</label>
+                        <label><input type="radio" name="q8" value="C"> Terras férteis e tecnologia agrícola.</label>
+                        <label><input type="radio" name="q8" value="D"> Florestas e reservas minerais.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="B">
+                        <legend>Questão 9</legend>
+                        <p>O chefe de governo que efetivamente exerce o poder no Canadá é o:</p>
+                        <label><input type="radio" name="q9" value="A"> Presidente.</label>
+                        <label><input type="radio" name="q9" value="B"> Primeiro-Ministro.</label>
+                        <label><input type="radio" name="q9" value="C"> Monarca Britânico.</label>
+                        <label><input type="radio" name="q9" value="D"> Governador-Geral.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="C">
+                        <legend>Questão 10</legend>
+                        <p>O Canadá é conhecido por ser um país multicultural devido:</p>
+                        <label><input type="radio" name="q10" value="A"> À sua grande extensão territorial.</label>
+                        <label><input type="radio" name="q10" value="B"> Às suas leis de bilinguismo.</label>
+                        <label><input type="radio" name="q10" value="C"> Ao seu histórico de receber imigrantes de todo o mundo.</label>
+                        <label><input type="radio" name="q10" value="D"> À presença de muitas populações nativas.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <!-- Questões sobre América Latina -->
+                    <fieldset data-answer="D">
+                        <legend>Questão 11</legend>
+                        <p>Qual foi o principal fator para a dizimação de grande parte das populações nativas da América Latina durante a colonização?</p>
+                        <label><input type="radio" name="q11" value="A"> As guerras constantes contra os colonizadores.</label>
+                        <label><input type="radio" name="q11" value="B"> A escravização em massa nas minas de prata.</label>
+                        <label><input type="radio" name="q11" value="C"> A mudança forçada de religião.</label>
+                        <label><input type="radio" name="q11" value="D"> As doenças trazidas pelos europeus, como gripe e varíola.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 12</legend>
+                        <p>O "comércio triangular" foi um sistema que, entre outras coisas, foi responsável por:</p>
+                        <label><input type="radio" name="q12" value="A"> Trazer milhões de africanos escravizados para a América.</label>
+                        <label><input type="radio" name="q12" value="B"> Levar produtos industrializados da América para a Europa.</label>
+                        <label><input type="radio" name="q12" value="C"> Estabelecer o livre comércio entre as colônias.</label>
+                        <label><input type="radio" name="q12" value="D"> Trocar mercadorias entre as colônias espanholas e portuguesas.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="B">
+                        <legend>Questão 13</legend>
+                        <p>Uma pirâmide etária com base muito larga e topo muito estreito, como a do Haiti, indica:</p>
+                        <label><input type="radio" name="q13" value="A"> Baixa natalidade e alta expectativa de vida.</label>
+                        <label><input type="radio" name="q13" value="B"> Alta natalidade e baixa expectativa de vida.</label>
+                        <label><input type="radio" name="q13" value="C"> Baixa natalidade e baixa expectativa de vida.</label>
+                        <label><input type="radio" name="q13" value="D"> Alta natalidade e alta expectativa de vida.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="C">
+                        <legend>Questão 14</legend>
+                        <p>Qual é o principal desafio socioeconômico de um país com uma pirâmide etária como a do Chile (base estreita e topo largo)?</p>
+                        <label><input type="radio" name="q14" value="A"> Investir em creches e escolas para a grande população infantil.</label>
+                        <label><input type="radio" name="q14" value="B"> Controlar o crescimento populacional acelerado.</label>
+                        <label><input type="radio" name="q14" value="C"> Sustentar o sistema de previdência e saúde para a população idosa.</label>
+                        <label><input type="radio" name="q14" value="D"> Combater o analfabetismo entre os jovens.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 15</legend>
+                        <p>O Índice de Gini é um indicador utilizado para medir:</p>
+                        <label><input type="radio" name="q15" value="A"> A concentração de renda e a desigualdade social.</label>
+                        <label><input type="radio" name="q15" value="B"> O nível de desenvolvimento industrial de um país.</label>
+                        <label><input type="radio" name="q15" value="C"> A expectativa de vida da população.</label>
+                        <label><input type="radio" name="q15" value="D"> A taxa de natalidade e mortalidade.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 16</legend>
+                        <p>Se um país tem um Índice de Gini próximo de 1, isso significa que:</p>
+                        <label><input type="radio" name="q16" value="A"> A renda é perfeitamente bem distribuída.</label>
+                        <label><input type="radio" name="q16" value="B"> O país tem uma população muito jovem.</label>
+                        <label><input type="radio" name="q16" value="C"> A expectativa de vida é muito alta.</label>
+                        <label><input type="radio" name="q16" value="D"> Há uma grande desigualdade e concentração de riqueza.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="B">
+                        <legend>Questão 17</legend>
+                        <p>A alta desigualdade social na América Latina é, em grande parte, uma herança histórica da:</p>
+                        <label><input type="radio" name="q17" value="A"> Influência cultural dos povos nativos.</label>
+                        <label><input type="radio" name="q17" value="B"> Estrutura de exploração e concentração de terras do período colonial.</label>
+                        <label><input type="radio" name="q17" value="C"> Industrialização tardia do continente no século XX.</label>
+                        <label><input type="radio" name="q17" value="D"> Grande diversidade étnica da população.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 18</legend>
+                        <p>O principal desafio para um país com a pirâmide etária do Haiti (muitos jovens) é investir em:</p>
+                        <label><input type="radio" name="q18" value="A"> Educação e geração de empregos para os jovens.</label>
+                        <label><input type="radio" name="q18" value="B"> Sistemas de aposentadoria para a população idosa.</label>
+                        <label><input type="radio" name="q18" value="C"> Políticas de incentivo à natalidade.</label>
+                        <label><input type="radio" name="q18" value="D"> Construção de hospitais de alta complexidade.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="C">
+                        <legend>Questão 19</legend>
+                        <p>A colonização da América Latina foi predominantemente realizada por:</p>
+                        <label><input type="radio" name="q19" value="A"> Reino Unido e França.</label>
+                        <label><input type="radio" name="q19" value="B"> Holanda e Reino Unido.</label>
+                        <label><input type="radio" name="q19" value="C"> Espanha e Portugal.</label>
+                        <label><input type="radio" name="q19" value="D"> França e Portugal.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 20</legend>
+                        <p>Qual fator melhor explica a alta concentração populacional do Canadá perto da fronteira com os EUA?</p>
+                        <label><input type="radio" name="q20" value="A"> Fator histórico, pois a colonização começou ali.</label>
+                        <label><input type="radio" name="q20" value="B"> Fator econômico, pela proximidade das indústrias americanas.</label>
+                        <label><input type="radio" name="q20" value="C"> Fator político, devido a acordos de fronteira.</label>
+                        <label><input type="radio" name="q20" value="D"> Fator climático, para evitar as temperaturas extremas do norte.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    <div class="botoes-teste">
+                        <button type="submit" id="btn-corrigir" class="btn-teste">Corrigir</button>
+                        <button type="button" id="btn-refazer" class="btn-teste">Refazer</button>
+                        <button type="button" id="btn-imprimir" class="btn-teste">Imprimir / Salvar PDF</button>
+                    </div>
+                </form>
+
+                <div id="resultado-final" role="alert" aria-live="assertive"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('teste-final-form');
+            const btnCorrigir = document.getElementById('btn-corrigir');
+            const btnRefazer = document.getElementById('btn-refazer');
+            const btnImprimir = document.getElementById('btn-imprimir');
+            const resultadoFinalDiv = document.getElementById('resultado-final');
+            const fieldsets = form.querySelectorAll('fieldset');
+
+            const feedbacks = {
+                q1: "A dualidade linguística do Canadá é a marca mais forte de sua colonização por ingleses e franceses.",
+                q2: "O Canadá mantém a monarquia britânica como chefe de Estado simbólico, mas o poder é do parlamento, liderado pelo Primeiro-Ministro.",
+                q3: "O clima polar e subpolar do norte canadense torna a ocupação humana muito difícil, concentrando a população no sul.",
+                q4: "Madeira, minérios, petróleo e água são a base da riqueza e da indústria canadense.",
+                q5: "O USMCA (Acordo Estados Unidos-México-Canadá) substituiu o NAFTA e rege o comércio na América do Norte.",
+                q6: "Essa é a base da relação comercial: o Canadá fornece os recursos primários e os EUA, os produtos finais.",
+                q7: "Qualquer mudança nas taxas ou regras impostas pelos EUA pode impactar fortemente a economia do Canadá.",
+                q8: "A geografia do Canadá, rica em florestas boreais e minerais, determinou o desenvolvimento de suas principais indústrias.",
+                q9: "No parlamentarismo, o chefe de governo (Primeiro-Ministro) detém o poder executivo, não o chefe de Estado (monarca).",
+                q10: "O Canadá tem uma política histórica de incentivo à imigração, o que resultou em uma sociedade muito diversa.",
+                q11: "Os povos nativos não tinham defesas biológicas contra as doenças europeias, o que causou uma catástrofe demográfica.",
+                q12: "O comércio triangular conectava Europa, África e América, sendo o tráfico de pessoas escravizadas um de seus pilares.",
+                q13: "A base larga representa muitos nascimentos (alta natalidade) e o topo estreito, poucas pessoas chegando a idades avançadas (baixa expectativa de vida).",
+                q14: "Com menos jovens entrando no mercado de trabalho e mais idosos se aposentando, o desafio é garantir recursos para a previdência e saúde.",
+                q15: "O Gini é a principal ferramenta para medir a desigualdade de renda em uma população.",
+                q16: "O valor 1 representa a desigualdade máxima, onde uma única pessoa detém toda a riqueza.",
+                q17: "A forma como a terra e a riqueza foram distribuídas no período colonial criou uma desigualdade que se perpetua.",
+                q18: "Uma população jovem grande demanda investimentos massivos em educação para garantir o futuro e em empregos para absorver essa mão de obra.",
+                q19: "Enquanto o Canadá foi colonizado por franceses e ingleses, a América Latina foi majoritariamente por espanhóis e portugueses.",
+                q20: "O fator climático é o principal determinante para a distribuição populacional do Canadá, tornando o sul muito mais habitável."
+            };
+
+            btnCorrigir.addEventListener('click', function (event) {
+                event.preventDefault();
+                let score = 0;
+                let todasRespondidas = true;
+
+                resetarVisual();
+
+                fieldsets.forEach((fieldset) => {
+                    const userAnswerInput = fieldset.querySelector('input[type="radio"]:checked');
+                    if (!userAnswerInput) {
+                        todasRespondidas = false;
+                        fieldset.style.borderColor = 'var(--cor-erro)';
+                    } else {
+                        fieldset.style.borderColor = 'var(--cor-borda)';
+                    }
+                });
+
+                if (!todasRespondidas) {
+                    resultadoFinalDiv.innerHTML = '<p>Por favor, responda a todas as questões antes de corrigir.</p>';
+                    resultadoFinalDiv.style.display = 'block';
+                    resultadoFinalDiv.style.backgroundColor = 'var(--cor-erro-fundo)';
+                    resultadoFinalDiv.style.borderColor = 'var(--cor-erro)';
+                    resultadoFinalDiv.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+
+                fieldsets.forEach((fieldset, index) => {
+                    const correctAnswer = fieldset.dataset.answer;
+                    const userAnswerInput = fieldset.querySelector('input[type="radio"]:checked');
+                    const userAnswer = userAnswerInput.value;
+                    const userLabel = userAnswerInput.parentElement;
+                    const feedbackDiv = fieldset.querySelector('.feedback-questao');
+                    const questaoId = `q${index + 1}`;
+
+                    const correctLabel = fieldset.querySelector(`input[value="${correctAnswer}"]`).parentElement;
+
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        userLabel.classList.add('resposta-correta');
+                        feedbackDiv.innerHTML = '<strong>Correta!</strong>';
+                        feedbackDiv.className = 'feedback-questao feedback-correto';
+                    } else {
+                        userLabel.classList.add('resposta-errada');
+                        correctLabel.classList.add('resposta-correta');
+                        feedbackDiv.innerHTML = `<strong>Incorreta.</strong> A resposta certa é a <strong>${correctAnswer}</strong>. <br><em>Por quê?</em> ${feedbacks[questaoId]}`;
+                        feedbackDiv.className = 'feedback-questao feedback-errado';
+                    }
+                    feedbackDiv.style.display = 'block';
+                });
+
+                exibirResultado(score);
+            });
+
+            btnRefazer.addEventListener('click', function () {
+                form.reset();
+                resetarVisual();
+                resultadoFinalDiv.style.display = 'none';
+                const testeSection = document.getElementById('teste-final');
+                testeSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            btnImprimir.addEventListener('click', function() {
+                window.print();
+            });
+
+            function resetarVisual() {
+                fieldsets.forEach(fieldset => {
+                    fieldset.style.borderColor = 'var(--cor-borda)';
+                    const feedbackDiv = fieldset.querySelector('.feedback-questao');
+                    if (feedbackDiv) {
+                        feedbackDiv.style.display = 'none';
+                    }
+                    fieldset.querySelectorAll('label').forEach(label => {
+                        label.classList.remove('resposta-correta', 'resposta-errada');
+                    });
+                });
+            }
+
+            function exibirResultado(score) {
+                const total = fieldsets.length;
+                const percentual = Math.round((score / total) * 100);
+                let mensagem = '';
+
+                if (percentual >= 90) {
+                    mensagem = 'Excelente! Você domina o conteúdo. Parabéns!';
+                } else if (percentual >= 70) {
+                    mensagem = 'Muito bem! Você tem um ótimo conhecimento sobre os temas.';
+                } else if (percentual >= 50) {
+                    mensagem = 'Bom resultado! Continue estudando para revisar os pontos que errou.';
+                } else {
+                    mensagem = 'Não desanime! Reveja os resumos com atenção e tente novamente. Estudar é um processo!';
+                }
+
+                resultadoFinalDiv.innerHTML = `
+                    <h3>Seu Resultado Final</h3>
+                    <p>Você acertou <strong>${score} de ${total}</strong> questões (${percentual}%).</p>
+                    <p>${mensagem}</p>
+                `;
+                resultadoFinalDiv.style.display = 'block';
+                resultadoFinalDiv.style.backgroundColor = '#eaf2f8';
+                resultadoFinalDiv.style.borderColor = 'var(--cor-info)';
+                resultadoFinalDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+
+</body>
+</html>
