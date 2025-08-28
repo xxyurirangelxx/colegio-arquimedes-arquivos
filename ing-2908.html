@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Interativo de Inglês - 8º Ano</title>
+    <style>
+        :root {
+            --cor-fundo: #f5f3f9;
+            --cor-texto: #3d3d3d;
+            --cor-primaria: #8e44ad;
+            --cor-primaria-hover: #732d91;
+            --cor-secundaria: #95a5a6;
+            --cor-sucesso: #27ae60;
+            --cor-erro: #c0392b;
+            --cor-aviso: #f39c12;
+            --cor-info: #2980b9;
+            --cor-fundo-caixa: #ffffff;
+            --cor-borda: #e9e4f0;
+            --sombra-caixa: 0 5px 15px rgba(0,0,0,0.07);
+            --raio-borda: 12px;
+            --cor-sucesso-fundo: #eafaf1;
+            --cor-erro-fundo: #f9ebea;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-hover));
+            color: white;
+            padding: 40px 20px;
+            border-radius: var(--raio-borda);
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: var(--sombra-caixa);
+        }
+
+        header h1 {
+            margin-top: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--cor-primaria);
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav a:hover, nav a:focus {
+            background-color: #fff;
+            color: var(--cor-primaria-hover);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        section {
+            background-color: var(--cor-fundo-caixa);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: var(--raio-borda);
+            box-shadow: var(--sombra-caixa);
+            border: 1px solid var(--cor-borda);
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--cor-primaria);
+            border-bottom: 3px solid var(--cor-primaria);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-top: 30px;
+        }
+        
+        .box {
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            border-left: 6px solid;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .box svg {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            margin-top: 3px;
+        }
+
+        .box-porque { background-color: #fef9e7; border-color: var(--cor-aviso); }
+        .box-erro { background-color: #fdedec; border-color: var(--cor-erro); }
+        .box-dica { background-color: #eafaf1; border-color: var(--cor-sucesso); }
+        .box-pratica { background-color: #eaf2f8; border-color: var(--cor-info); }
+
+        strong { color: var(--cor-primaria-hover); font-weight: 500; }
+        code {
+            background-color: #ecf0f1;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.95em;
+            color: #c0392b;
+        }
+
+        /* Estilos do Teste Final */
+        #teste-final-form fieldset {
+            border: 1px solid var(--cor-borda);
+            border-radius: var(--raio-borda);
+            margin-bottom: 25px;
+            padding: 20px;
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+        #teste-final-form fieldset:focus-within {
+            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.25);
+            border-color: var(--cor-primaria);
+        }
+
+        #teste-final-form legend {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--cor-secundaria);
+            padding: 0 10px;
+        }
+
+        #teste-final-form label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid var(--cor-borda);
+        }
+
+        #teste-final-form label:hover {
+            background-color: #f5eef8;
+            border-color: var(--cor-primaria);
+        }
+        
+        #teste-final-form input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .resposta-correta {
+            background-color: var(--cor-sucesso-fundo);
+            border-color: var(--cor-sucesso) !important;
+            font-weight: 500;
+        }
+        .resposta-errada {
+            background-color: var(--cor-erro-fundo);
+            border-color: var(--cor-erro) !important;
+        }
+        
+        .feedback-questao {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .feedback-correto { background-color: var(--cor-sucesso-fundo); color: #155724; }
+        .feedback-errado { background-color: var(--cor-erro-fundo); color: #721c24; }
+
+        .botoes-teste {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-teste {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .btn-teste:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            opacity: 0.9;
+        }
+
+        .btn-teste:active {
+            transform: translateY(1px);
+        }
+
+        #btn-corrigir { background-color: var(--cor-primaria); color: white; }
+        #btn-refazer { background-color: var(--cor-secundaria); color: white; }
+        #btn-imprimir { background-color: #34495e; color: white; }
+
+        #resultado-final {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: var(--raio-borda);
+            background-color: var(--cor-fundo-caixa);
+            border: 1px solid var(--cor-borda);
+            font-size: 1.2em;
+            display: none;
+        }
+
+        @media print {
+            body { box-shadow: none; padding: 0; margin: 0; font-family: sans-serif; }
+            header, .botoes-teste, nav { display: none; }
+            .container, section { box-shadow: none; margin: 0; padding: 10px 0; max-width: 100%; border: none; }
+            .resposta-correta, .resposta-errada { border: 1px solid #ccc; }
+            .box { background-color: #eee !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Revisão Interativa de Inglês</h1>
+            <p>8º Ano | Relative Pronouns & Simple Future (will)</p>
+            <nav>
+                <ul>
+                    <li><a href="#tema1">Relative Pronouns</a></li>
+                    <li><a href="#tema2">Simple Future (will)</a></li>
+                    <li><a href="#teste-final">Teste Final</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- TEMA 1: RELATIVE PRONOUNS -->
+            <section id="tema1">
+                <h2>1. Relative Pronouns</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Para conectar ideias e evitar repetições, deixando seu inglês mais fluente e natural. Em vez de dizer "Eu vi o homem. O homem é meu professor.", você diz "Eu vi o homem <strong>que</strong> é meu professor."</div>
+                </div>
+
+                <h3>O que são e para que servem?</h3>
+                <p>Os pronomes relativos (<em>relative pronouns</em>) são palavras usadas para introduzir uma oração que dá mais informações sobre algo que já foi mencionado. Eles conectam duas frases em uma só.</p>
+
+                <h3>Os 5 Principais e Quando Usar</h3>
+                <ul>
+                    <li><strong>WHO (quem):</strong> Usado para se referir a <strong>pessoas</strong>.
+                        <p>Ex: <em>The girl <strong>who</strong> is singing is my sister.</em> (A garota <strong>que</strong> está cantando é minha irmã.)</p>
+                    </li>
+                    <li><strong>WHICH (que, o qual, a qual):</strong> Usado para se referir a <strong>coisas ou animais</strong>.
+                        <p>Ex: <em>This is the book <strong>which</strong> I bought yesterday.</em> (Este é o livro <strong>que</strong> eu comprei ontem.)</p>
+                    </li>
+                    <li><strong>THAT (que):</strong> O "coringa". Pode ser usado para se referir a <strong>pessoas ou coisas</strong>. É mais comum em conversas informais.
+                        <p>Ex: <em>The man <strong>that</strong> lives here is a doctor.</em> (O homem <strong>que</strong> mora aqui é um médico.)<br>
+                        Ex: <em>The car <strong>that</strong> is red is mine.</em> (O carro <strong>que</strong> é vermelho é meu.)</p>
+                    </li>
+                    <li><strong>WHOSE (cujo, cuja):</strong> Indica <strong>posse</strong>. Conecta uma pessoa/coisa ao que ela possui.
+                        <p>Ex: <em>She is the artist <strong>whose</strong> paintings are famous.</em> (Ela é a artista <strong>cujos</strong> quadros são famosos.)</p>
+                    </li>
+                    <li><strong>WHERE (onde):</strong> Usado para se referir a <strong>lugares</strong>.
+                        <p>Ex: <em>This is the house <strong>where</strong> I grew up.</em> (Esta é a casa <strong>onde</strong> eu cresci.)</p>
+                    </li>
+                </ul>
+
+                <div class="box box-erro">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 13.5L7 12l1.5-1.5L10.5 12l4.5-4.5L16.5 9l-6 6z" transform="rotate(45 12 12)"/></svg>
+                    <div>
+                        <h4>Erros Comuns e Como Evitar</h4>
+                        <p><strong>Erro:</strong> Usar <code>which</code> para pessoas. Ex: <em>"The student which got a good grade..."</em><br>
+                        <strong>Como evitar:</strong> Lembre-se da regra de ouro: <strong>WHO = Pessoas</strong>. <strong>WHICH = Coisas/Animais</strong>. A frase correta é <em>"The student <strong>who</strong> got a good grade..."</em>.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEMA 2: SIMPLE FUTURE (WILL) -->
+            <section id="tema2">
+                <h2>2. Simple Future (will)</h2>
+                <div class="box box-porque">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <div><strong>Por que isso é importante?</strong> Para falar sobre o futuro de forma simples e direta. Usamos <code>will</code> para expressar previsões, decisões espontâneas, promessas e ofertas, situações muito comuns no dia a dia.</div>
+                </div>
+
+                <h3>Quando Usar o "WILL"?</h3>
+                <p>O <code>will</code> é usado principalmente em três situações:</p>
+                <ul>
+                    <li><strong>Previsões:</strong> Falar de algo que você <strong>acha</strong> que vai acontecer no futuro, sem uma evidência forte.
+                        <p>Ex: <em>I think it <strong>will rain</strong> tomorrow.</em> (Eu acho que <strong>vai chover</strong> amanhã.)</p>
+                    </li>
+                    <li><strong>Decisões Espontâneas:</strong> Decisões tomadas no momento da fala.
+                        <p>Ex: (O telefone toca) <em>"I'<strong>ll get</strong> it!"</em> (Eu <strong>atendo</strong>!)</p>
+                    </li>
+                    <li><strong>Promessas e Ofertas:</strong>
+                        <p>Ex: <em>I <strong>will always</strong> love you.</em> (Eu <strong>sempre vou</strong> te amar.) - Promessa<br>
+                        Ex: <em>I'<strong>ll help</strong> you with your homework.</em> (Eu <strong>te ajudo</strong> com seu dever de casa.) - Oferta</p>
+                    </li>
+                </ul>
+
+                <h3>Como Montar as Frases</h3>
+                <div class="box box-pratica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <div>
+                        <h4>A Fórmula do Futuro</h4>
+                        <ul>
+                            <li><strong>Afirmativa:</strong> Sujeito + <code>will</code> + Verbo (sem 'to')
+                                <p>Ex: <em>She <strong>will travel</strong> to Japan.</em></p>
+                            </li>
+                            <li><strong>Negativa:</strong> Sujeito + <code>will not</code> (ou <code>won't</code>) + Verbo (sem 'to')
+                                <p>Ex: <em>They <strong>will not (won't) come</strong> to the party.</em></p>
+                            </li>
+                            <li><strong>Interrogativa:</strong> <code>Will</code> + Sujeito + Verbo (sem 'to') + ?
+                                <p>Ex: <em><strong>Will you call</strong> me later?</em></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="box box-dica">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.01 16c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm1.5-4h-3c-.28 0-.5-.22-.5-.5v-5c0-.28.22-.5.5-.5h3c.28 0 .5.22.5.5v5c0 .28-.22-.5-.5.5z"/></svg>
+                    <div>
+                        <h4>Dica de Prova: "Will" vs. "Going to"</h4>
+                        <p>Muitas questões tentam confundir <code>will</code> com <code>going to</code>. Lembre-se: <code>will</code> é para previsões sem certeza e decisões na hora. <code>Going to</code> é para planos já decididos e previsões com evidência. <br>Ex: <em>Look at the clouds! It's <strong>going to</strong> rain.</em> (Olhe as nuvens! Vai chover. - com evidência)</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TESTE FINAL -->
+            <section id="teste-final">
+                <h2>Teste Final - Pratique o que você aprendeu!</h2>
+                <p>Responda às 20 questões abaixo. Ao final, clique em "Corrigir" para ver seu resultado.</p>
+                
+                <form id="teste-final-form">
+                    <!-- Questões sobre Relative Pronouns -->
+                    <fieldset data-answer="A">
+                        <legend>Questão 1</legend>
+                        <p>Choose the correct relative pronoun: <em>The man, _____ is wearing a blue shirt, is my father.</em></p>
+                        <label><input type="radio" name="q1" value="A"> who</label>
+                        <label><input type="radio" name="q1" value="B"> which</label>
+                        <label><input type="radio" name="q1" value="C"> whose</label>
+                        <label><input type="radio" name="q1" value="D"> where</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="B">
+                        <legend>Questão 2</legend>
+                        <p>Choose the correct relative pronoun: <em>I read the book _____ you gave me.</em></p>
+                        <label><input type="radio" name="q2" value="A"> who</label>
+                        <label><input type="radio" name="q2" value="B"> which</label>
+                        <label><input type="radio" name="q2" value="C"> whose</label>
+                        <label><input type="radio" name="q2" value="D"> where</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 3</legend>
+                        <p>Choose the correct relative pronoun: <em>That's the park _____ we play soccer.</em></p>
+                        <label><input type="radio" name="q3" value="A"> who</label>
+                        <label><input type="radio" name="q3" value="B"> which</label>
+                        <label><input type="radio" name="q3" value="C"> whose</label>
+                        <label><input type="radio" name="q3" value="D"> where</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 4</legend>
+                        <p>Choose the correct relative pronoun: <em>He is the musician _____ songs are famous worldwide.</em></p>
+                        <label><input type="radio" name="q4" value="A"> who</label>
+                        <label><input type="radio" name="q4" value="B"> which</label>
+                        <label><input type="radio" name="q4" value="C"> whose</label>
+                        <label><input type="radio" name="q4" value="D"> that</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="A">
+                        <legend>Questão 5</legend>
+                        <p>Which pronoun can replace "who" in the sentence: <em>The person who called you is here.</em>?</p>
+                        <label><input type="radio" name="q5" value="A"> that</label>
+                        <label><input type="radio" name="q5" value="B"> which</label>
+                        <label><input type="radio" name="q5" value="C"> whose</label>
+                        <label><input type="radio" name="q5" value="D"> where</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="B">
+                        <legend>Questão 6</legend>
+                        <p>Which sentence is incorrect?</p>
+                        <label><input type="radio" name="q6" value="A"> The dog that is barking is my neighbor's.</label>
+                        <label><input type="radio" name="q6" value="B"> The teacher which explains well is popular.</label>
+                        <label><input type="radio" name="q6" value="C"> This is the city where I was born.</label>
+                        <label><input type="radio" name="q6" value="D"> I know a girl whose father is an astronaut.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="D">
+                        <legend>Questão 7</legend>
+                        <p>Choose the correct relative pronoun: <em>The computer _____ I use at work is very old.</em></p>
+                        <label><input type="radio" name="q7" value="A"> who</label>
+                        <label><input type="radio" name="q7" value="B"> where</label>
+                        <label><input type="radio" name="q7" value="C"> whose</label>
+                        <label><input type="radio" name="q7" value="D"> that</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 8</legend>
+                        <p>Choose the correct relative pronoun: <em>Do you know the woman _____ is talking to Tom?</em></p>
+                        <label><input type="radio" name="q8" value="A"> who</label>
+                        <label><input type="radio" name="q8" value="B"> which</label>
+                        <label><input type="radio" name="q8" value="C"> whose</label>
+                        <label><input type="radio" name="q8" value="D"> where</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="C">
+                        <legend>Questão 9</legend>
+                        <p>Choose the correct relative pronoun: <em>The boy _____ bike was stolen went to the police.</em></p>
+                        <label><input type="radio" name="q9" value="A"> who</label>
+                        <label><input type="radio" name="q9" value="B"> which</label>
+                        <label><input type="radio" name="q9" value="C"> whose</label>
+                        <label><input type="radio" name="q9" value="D"> that</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="B">
+                        <legend>Questão 10</legend>
+                        <p>Choose the correct relative pronoun: <em>This is the restaurant _____ serves the best pizza in town.</em></p>
+                        <label><input type="radio" name="q10" value="A"> who</label>
+                        <label><input type="radio" name="q10" value="B"> which</label>
+                        <label><input type="radio" name="q10" value="C"> whose</label>
+                        <label><input type="radio" name="q10" value="D"> where</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <!-- Questões sobre Simple Future (will) -->
+                    <fieldset data-answer="A">
+                        <legend>Questão 11</legend>
+                        <p>Choose the correct form: <em>I think our team _____ the game.</em></p>
+                        <label><input type="radio" name="q11" value="A"> will win</label>
+                        <label><input type="radio" name="q11" value="B"> wins</label>
+                        <label><input type="radio" name="q11" value="C"> is winning</label>
+                        <label><input type="radio" name="q11" value="D"> won</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 12</legend>
+                        <p>Which is the negative form of "She will be here soon"?</p>
+                        <label><input type="radio" name="q12" value="A"> She will is not here soon.</label>
+                        <label><input type="radio" name="q12" value="B"> She not will be here soon.</label>
+                        <label><input type="radio" name="q12" value="C"> She be not will here soon.</label>
+                        <label><input type="radio" name="q12" value="D"> She will not (won't) be here soon.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="C">
+                        <legend>Questão 13</legend>
+                        <p>Choose the correct question form: <em>_____ to the party with us?</em></p>
+                        <label><input type="radio" name="q13" value="A"> You will come</label>
+                        <label><input type="radio" name="q13" value="B"> Do you will come</label>
+                        <label><input type="radio" name="q13" value="C"> Will you come</label>
+                        <label><input type="radio" name="q13" value="D"> You come will</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="B">
+                        <legend>Questão 14</legend>
+                        <p>In which situation is "will" most commonly used?</p>
+                        <label><input type="radio" name="q14" value="A"> For plans made last week.</label>
+                        <label><input type="radio" name="q14" value="B"> For a spontaneous decision.</label>
+                        <label><input type="radio" name="q14" value="C"> For actions happening now.</label>
+                        <label><input type="radio" name="q14" value="D"> For habits in the past.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 15</legend>
+                        <p>Choose the correct form: <em>Don't worry, I _____ you.</em></p>
+                        <label><input type="radio" name="q15" value="A"> will help</label>
+                        <label><input type="radio" name="q15" value="B"> help</label>
+                        <label><input type="radio" name="q15" value="C"> am helping</label>
+                        <label><input type="radio" name="q15" value="D"> helped</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 16</legend>
+                        <p>What is the contracted form of "will not"?</p>
+                        <label><input type="radio" name="q16" value="A"> willn't</label>
+                        <label><input type="radio" name="q16" value="B"> will'nt</label>
+                        <label><input type="radio" name="q16" value="C"> willno</label>
+                        <label><input type="radio" name="q16" value="D"> won't</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="B">
+                        <legend>Questão 17</legend>
+                        <p>Choose the correct form: <em>Maybe we _____ to the beach on Sunday.</em></p>
+                        <label><input type="radio" name="q17" value="A"> goes</label>
+                        <label><input type="radio" name="q17" value="B"> will go</label>
+                        <label><input type="radio" name="q17" value="C"> are going</label>
+                        <label><input type="radio" name="q17" value="D"> went</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="A">
+                        <legend>Questão 18</legend>
+                        <p>Which sentence expresses a promise?</p>
+                        <label><input type="radio" name="q18" value="A"> I will call you every day.</label>
+                        <label><input type="radio" name="q18" value="B"> I am calling you now.</label>
+                        <label><input type="radio" name="q18" value="C"> I called you yesterday.</label>
+                        <label><input type="radio" name="q18" value="D"> Will you call me?</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    
+                    <fieldset data-answer="C">
+                        <legend>Questão 19</legend>
+                        <p>Choose the correct form: <em>He _____ probably be late for the meeting.</em></p>
+                        <label><input type="radio" name="q19" value="A"> is</label>
+                        <label><input type="radio" name="q19" value="B"> are</label>
+                        <label><input type="radio" name="q19" value="C"> will</label>
+                        <label><input type="radio" name="q19" value="D"> was</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+
+                    <fieldset data-answer="D">
+                        <legend>Questão 20</legend>
+                        <p>Choose the correct answer for the question: "Will they finish the project on time?"</p>
+                        <label><input type="radio" name="q20" value="A"> Yes, they will finish.</label>
+                        <label><input type="radio" name="q20" value="B"> Yes, they finish.</label>
+                        <label><input type="radio" name="q20" value="C"> Yes, they are.</label>
+                        <label><input type="radio" name="q20" value="D"> Yes, they will.</label>
+                        <div class="feedback-questao"></div>
+                    </fieldset>
+                    <div class="botoes-teste">
+                        <button type="submit" id="btn-corrigir" class="btn-teste">Corrigir</button>
+                        <button type="button" id="btn-refazer" class="btn-teste">Refazer</button>
+                        <button type="button" id="btn-imprimir" class="btn-teste">Imprimir / Salvar PDF</button>
+                    </div>
+                </form>
+
+                <div id="resultado-final" role="alert" aria-live="assertive"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('teste-final-form');
+            const btnCorrigir = document.getElementById('btn-corrigir');
+            const btnRefazer = document.getElementById('btn-refazer');
+            const btnImprimir = document.getElementById('btn-imprimir');
+            const resultadoFinalDiv = document.getElementById('resultado-final');
+            const fieldsets = form.querySelectorAll('fieldset');
+
+            const feedbacks = {
+                q1: "Usamos 'who' para nos referirmos a pessoas. 'The man' é uma pessoa.",
+                q2: "Usamos 'which' ou 'that' para nos referirmos a coisas. 'The book' é uma coisa.",
+                q3: "Usamos 'where' para nos referirmos a lugares. 'The park' é um lugar.",
+                q4: "Usamos 'whose' para indicar posse. As músicas pertencem ao músico.",
+                q5: "'That' é o pronome coringa que pode ser usado tanto para pessoas quanto para coisas.",
+                q6: "A frase B está incorreta porque 'teacher' é uma pessoa, então deveríamos usar 'who' ou 'that', e não 'which'.",
+                q7: "'That' ou 'which' são usados para coisas. 'The computer' é uma coisa.",
+                q8: "'Who' é usado para pessoas. 'The woman' é uma pessoa.",
+                q9: "'Whose' indica posse. A bicicleta ('bike') pertence ao menino ('boy').",
+                q10: "'Which' ou 'that' são usados para coisas/lugares como sujeitos ou objetos. 'The restaurant' é uma coisa/lugar.",
+                q11: "Para previsões baseadas em opinião (I think), usamos 'will' + verbo.",
+                q12: "A forma negativa do 'will' é 'will not', e sua contração é 'won't'.",
+                q13: "Para fazer uma pergunta com 'will', colocamos o 'will' antes do sujeito: Will + sujeito + verbo.",
+                q14: "'Will' é ideal para decisões tomadas no momento da fala, como 'I'll get the phone!'.",
+                q15: "Esta frase é uma oferta ou promessa feita no momento, uma situação perfeita para 'will'.",
+                q16: "A contração correta e comum de 'will not' é 'won't'.",
+                q17: "A palavra 'maybe' (talvez) indica uma previsão ou possibilidade, não um plano fixo, por isso usamos 'will'.",
+                q18: "A frase 'I will call you every day' expressa uma promessa de uma ação futura e repetida.",
+                q19: "A estrutura para uma previsão com 'probably' é sujeito + 'will' + probably + verbo.",
+                q20: "Em respostas curtas para perguntas com 'will', repetimos o sujeito e o 'will': 'Yes, they will.' ou 'No, they won't.'."
+            };
+
+            btnCorrigir.addEventListener('click', function (event) {
+                event.preventDefault();
+                let score = 0;
+                let todasRespondidas = true;
+
+                resetarVisual();
+
+                fieldsets.forEach((fieldset) => {
+                    const userAnswerInput = fieldset.querySelector('input[type="radio"]:checked');
+                    if (!userAnswerInput) {
+                        todasRespondidas = false;
+                        fieldset.style.borderColor = 'var(--cor-erro)';
+                    } else {
+                        fieldset.style.borderColor = 'var(--cor-borda)';
+                    }
+                });
+
+                if (!todasRespondidas) {
+                    resultadoFinalDiv.innerHTML = '<p>Por favor, responda a todas as questões antes de corrigir.</p>';
+                    resultadoFinalDiv.style.display = 'block';
+                    resultadoFinalDiv.style.backgroundColor = 'var(--cor-erro-fundo)';
+                    resultadoFinalDiv.style.borderColor = 'var(--cor-erro)';
+                    resultadoFinalDiv.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+
+                fieldsets.forEach((fieldset, index) => {
+                    const correctAnswer = fieldset.dataset.answer;
+                    const userAnswerInput = fieldset.querySelector('input[type="radio"]:checked');
+                    const userAnswer = userAnswerInput.value;
+                    const userLabel = userAnswerInput.parentElement;
+                    const feedbackDiv = fieldset.querySelector('.feedback-questao');
+                    const questaoId = `q${index + 1}`;
+
+                    const correctLabel = fieldset.querySelector(`input[value="${correctAnswer}"]`).parentElement;
+
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        userLabel.classList.add('resposta-correta');
+                        feedbackDiv.innerHTML = '<strong>Correta!</strong>';
+                        feedbackDiv.className = 'feedback-questao feedback-correto';
+                    } else {
+                        userLabel.classList.add('resposta-errada');
+                        correctLabel.classList.add('resposta-correta');
+                        feedbackDiv.innerHTML = `<strong>Incorreta.</strong> A resposta certa é a <strong>${correctAnswer}</strong>. <br><em>Por quê?</em> ${feedbacks[questaoId]}`;
+                        feedbackDiv.className = 'feedback-questao feedback-errado';
+                    }
+                    feedbackDiv.style.display = 'block';
+                });
+
+                exibirResultado(score);
+            });
+
+            btnRefazer.addEventListener('click', function () {
+                form.reset();
+                resetarVisual();
+                resultadoFinalDiv.style.display = 'none';
+                const testeSection = document.getElementById('teste-final');
+                testeSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            btnImprimir.addEventListener('click', function() {
+                window.print();
+            });
+
+            function resetarVisual() {
+                fieldsets.forEach(fieldset => {
+                    fieldset.style.borderColor = 'var(--cor-borda)';
+                    const feedbackDiv = fieldset.querySelector('.feedback-questao');
+                    if (feedbackDiv) {
+                        feedbackDiv.style.display = 'none';
+                    }
+                    fieldset.querySelectorAll('label').forEach(label => {
+                        label.classList.remove('resposta-correta', 'resposta-errada');
+                    });
+                });
+            }
+
+            function exibirResultado(score) {
+                const total = fieldsets.length;
+                const percentual = Math.round((score / total) * 100);
+                let mensagem = '';
+
+                if (percentual >= 90) {
+                    mensagem = 'Excellent! You have mastered the content. Congratulations!';
+                } else if (percentual >= 70) {
+                    mensagem = 'Very good! You have a great understanding of the topics.';
+                } else if (percentual >= 50) {
+                    mensagem = 'Good result! Keep studying to review the points you missed.';
+                } else {
+                    mensagem = "Don't be discouraged! Review the summaries carefully and try again. Studying is a process!";
+                }
+
+                resultadoFinalDiv.innerHTML = `
+                    <h3>Your Final Result</h3>
+                    <p>Você acertou <strong>${score} de ${total}</strong> questões (${percentual}%).</p>
+                    <p>${mensagem}</p>
+                `;
+                resultadoFinalDiv.style.display = 'block';
+                resultadoFinalDiv.style.backgroundColor = '#f5eef8';
+                resultadoFinalDiv.style.borderColor = 'var(--cor-primaria)';
+                resultadoFinalDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+
+</body>
+</html>
